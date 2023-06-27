@@ -80,12 +80,6 @@ jobs:
         with:
           team_id: ${{ steps.azureteam.outputs.azure_team_id }}
 
-      # - name: deploy adt instance and permissions
-      #   continue-on-error: true
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/adt@asset
-      #   with:
-      #     team_id: ${{ steps.azureteam.outputs.azure_team_id }}
-
       - name: deploy eventhub namespaces and permissions
         uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
         with:
