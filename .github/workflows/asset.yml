@@ -10,6 +10,23 @@ on:
     branches:
       - master
 
+  pull_request:
+    branches:
+      - master 
+
+  # schedule:
+  #   - cron: "0 0 * * 1-5"
+
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        type: choice
+        description: "Log level"
+        options:
+          - "Testing"
+          - "warning"
+        required: true
+
 jobs:
   asset-deploy:
     runs-on: ubuntu-latest
@@ -63,11 +80,11 @@ jobs:
         with:
           team_id: ${{ steps.azureteam.outputs.azure_team_id }}
 
-      - name: deploy adt instance and permissions
-        continue-on-error: true
-        uses: Cosmo-Tech/babylon-actions/.github/actions/adt@asset
-        with:
-          team_id: ${{ steps.azureteam.outputs.azure_team_id }}
+      # - name: deploy adt instance and permissions
+      #   continue-on-error: true
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/adt@asset
+      #   with:
+      #     team_id: ${{ steps.azureteam.outputs.azure_team_id }}
 
       - name: deploy eventhub namespaces and permissions
         uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
@@ -112,7 +129,6 @@ jobs:
           echo "dadt=$(babylon config get-variable deploy 'adt_dataset_id')" >> $GITHUB_OUTPUT
           echo "wpi=$(babylon config get-variable deploy 'webapp_principal_id')" >> $GITHUB_OUTPUT
       
-
       - name: deploy webapp
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
@@ -160,11 +176,11 @@ jobs:
           type: twin
           name: "Asset Baby Connector Twin"
 
-      - name: create adt connector
-        uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
-        with:
-          type: adt
-          name: "Asset Baby Connector ADT"
+      # - name: create adt connector
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
+      #   with:
+      #     type: adt
+      #     name: "Asset Baby Connector ADT"
 
       - name: create connector storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
@@ -172,11 +188,17 @@ jobs:
           type: storage
           name: "Asset Baby connector STORAGE"
 
-      - name: create dataset adt
+      # - name: create dataset adt
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
+      #   with:
+      #     type: adt
+      #     name: "Asset Baby dataset ADT"
+      
+      - name: create dataset twin
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
         with:
-          type: adt
-          name: "Asset Baby dataset ADT"
+          type: twin
+          name: "Asset Baby dataset Twin"
 
       - name: Retrieve babylon variables
         id: baby_wpi
