@@ -94,8 +94,8 @@ jobs:
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
         with:
-          repo_from: Cosmo-Tech/azure-asset-dev-webapp
-          repo_tag: upstream/main
+          repo_from: Cosmo-Tech/azure-asset-staging-prod-webapp
+          repo_tag: deployment/dev1
           repo_to: MohcineTor/Test-solution
           repo_to_branch: deploy/asset
           username: mohcine
