@@ -96,7 +96,7 @@ jobs:
         with:
           repo_from: Cosmo-Tech/azure-asset-staging-prod-webapp
           repo_tag: upstream/deployment/dev1
-          repo_to: Cosmo-Tech/Test-solution
+          repo_to: MohcineTor/Test-Web-App
           repo_to_branch: deploy/asset
           username: mohcine
           email: mohcine.tor@cosmotech.com
