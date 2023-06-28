@@ -127,7 +127,7 @@ jobs:
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
         with:
-          powerbi: true
+          powerbi: false
           azf: true
 
       - name: az login
