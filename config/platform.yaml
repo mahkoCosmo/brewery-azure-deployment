@@ -1,4 +1,4 @@
-api_url: https://dev.api.cosmotech.com/v2
+api_url: https://dev.api.cosmotech.com/v2-4-dev
 api_scope: http://dev.api.cosmotech.com/.default
 csm_platform_app_id: f6fbd519-9a53-4c6b-aabb-4919bb2d11be
 csm_object_platform_id: 87267e78-0cff-4bd7-a4c5-8a68727f8cb7
@@ -11,8 +11,8 @@ redirect_uri_port: ""
 adx_cluster_name: phoenixdev
 adx_cluster_object_id: fb3cc984-9652-4536-9045-2a143bbe1a8f
 resource_group_name: phoenixdev
-csm_acr_registry_name: csmenginesdev
-acr_registry_name: csmenginesdev
+csm_acr_registry_name: csmenginesdev.azurecr.io
+acr_registry_name: csmenginesdev.azurecr.io"
 resources_location: westeurope
 storage_account_name: csmphoenixdev
 powerbi_api_scope: https://analysis.windows.net/powerbi/api/.default

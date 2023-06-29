@@ -1,8 +1,8 @@
 organization_id: ''
 solution_id: ''
 workspace_id: ''
-workspace_key: a7wkD1
-api_url: https://dev.api.cosmotech.com/v2
+workspace_key: a7wkDMtor
+api_url: https://dev.api.cosmotech.com/v2-4-dev
 resource_group_name: phoenixdev
 resources_location: westeurope
 adx_database_name: ''
@@ -12,11 +12,11 @@ simulator_repository: simulator_simulator
 simulator_version: FixHealthScoreTest3c
 send_scenario_metadata_to_event_hub: true
 use_dedicated_event_hub_namespace: true
-deployment_name: AssetDeployment
+deployment_name: Assetmtortestwebapp
 webapp_domain: ''
 webapp_location: eastus2
-webapp_repository: ''
-webapp_repository_branch: ''
+webapp_repository: https://github.com/MohcineTor/Test-Web-App
+webapp_repository_branch: deploy/asset
 webapp_registration_id: ''
 webapp_principal_id: ''
 webapp_organization_url: https://cosmotech.com
