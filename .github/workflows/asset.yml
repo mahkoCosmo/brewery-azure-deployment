@@ -217,6 +217,14 @@ jobs:
           name: Asset Baby Workspace
           email: mohcine.tor@cosmotech.com
 
+      # Add Power BI deployment action 
+      - name : PowerBI deployment
+        uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
+        with: 
+          workspace_name: asset_dashboard
+          database_name: phoenixdev
+          cluster_name: phoenixdev
+
       - name: set key api
         run: |
           cd $dir
