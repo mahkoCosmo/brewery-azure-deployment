@@ -94,7 +94,7 @@ jobs:
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
         with:
-          repo_from: Cosmo-Tech/phoenix-asset-product-webapp
+          repo_from: Cosmo-Tech/azure-asset-staging-prod-webapp
           repo_tag: upstream/deployment/dev1
           repo_to: MohcineTor/Test-Web-App
           repo_to_branch: deploy/asset
@@ -122,15 +122,15 @@ jobs:
           echo "hostname=$(babylon config get-variable deploy 'webapp_static_domain')" >> $GITHUB_OUTPUT
           echo "dadt=$(babylon config get-variable deploy 'adt_dataset_id')" >> $GITHUB_OUTPUT
           echo "wpi=$(babylon config get-variable deploy 'webapp_principal_id')" >> $GITHUB_OUTPUT
-
-      - name : Deploy workspace powerbi
+      
+      - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with: 
-          workspace_name: asset_dashboardv1
+          workspace_name: asset_dashboard
           database_name: phoenixdev
           cluster_name: phoenixdev
 
-      - name: Deploy webapp
+      - name: deploy webapp
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
         with:
@@ -195,7 +195,7 @@ jobs:
       #     type: adt
       #     name: "Asset Baby dataset ADT"
       
-      - name: Create Dataset twin
+      - name: create dataset twin
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
         with:
           type: twin
@@ -213,12 +213,12 @@ jobs:
           pi: ${{ steps.baby_wpi.outputs.wpi }}
           ri: Microsoft.DigitalTwins/digitalTwinsInstances
 
-      - name: Create solution Asset
+      - name: create solution Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
         with:
           name: "Asset Solution Test"
- 
-       - name: Create workspace Asset
+
+      - name: create workspace Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
         with:
           name: Asset Baby Workspace
