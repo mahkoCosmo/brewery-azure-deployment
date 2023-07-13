@@ -123,6 +123,20 @@ jobs:
           echo "dadt=$(babylon config get-variable deploy 'adt_dataset_id')" >> $GITHUB_OUTPUT
           echo "wpi=$(babylon config get-variable deploy 'webapp_principal_id')" >> $GITHUB_OUTPUT
 
+      - name : Deploy workspace powerbi
+        uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
+        with: 
+          workspace_name: asset_dashboardv1
+          database_name: phoenixdev
+          cluster_name: phoenixdev
+
+      - name: Deploy webapp
+        continue-on-error: true
+        uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
+        with:
+          powerbi: true
+          azf: true
+
       - name: az login
         uses: azure/login@v1
         with:
@@ -204,14 +218,7 @@ jobs:
         with:
           name: "Asset Solution Test"
  
-      - name : Deploy workspace powerbi
-        uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
-        with: 
-          workspace_name: asset_dashboardv1
-          database_name: phoenixdev
-          cluster_name: phoenixdev
-
-      - name: Create workspace Asset
+       - name: Create workspace Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
         with:
           name: Asset Baby Workspace
@@ -221,10 +228,3 @@ jobs:
         run: |
           cd $dir
           babylon api workspace setkey
-
-      - name: Deploy webapp
-        continue-on-error: true
-        uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
-        with:
-          powerbi: true
-          azf: true
