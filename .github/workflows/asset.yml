@@ -126,7 +126,7 @@ jobs:
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with: 
-          workspace_name: asset_dashboard_v3
+          workspace_name: asset_dashboard_v6
           database_name: phoenixdev
           cluster_name: phoenixdev
 
