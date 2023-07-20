@@ -9,23 +9,13 @@ on:
   push:
     branches:
       - master
-
   pull_request:
     branches:
       - master 
-
   # schedule:
   #   - cron: "0 0 * * 1-5"
-
   workflow_dispatch:
-    inputs:
-      logLevel:
-        type: choice
-        description: "Log level"
-        options:
-          - "Testing"
-          - "warning"
-        required: true
+
 
 jobs:
   asset-deploy:
@@ -126,9 +116,10 @@ jobs:
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with: 
-          workspace_name: asset_dashboard_v7
-          database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
-          cluster_name: phoenixdev
+          workspace_name: asset_dashboard_v8
+          user_name: mohcine.tor@cosmotech.com
+          # database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
+          # cluster_name: phoenixdev
 
       - name: deploy webapp
         continue-on-error: true

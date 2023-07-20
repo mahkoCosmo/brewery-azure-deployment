@@ -12,7 +12,7 @@ simulator_repository: simulator_simulator
 simulator_version: ASSET_v14.2.0_2023-05-30-10h25-06Z
 send_scenario_metadata_to_event_hub: true
 use_dedicated_event_hub_namespace: true
-deployment_name: Assetmtortestwebappv7
+deployment_name: Assetmtortestwebappv8
 webapp_domain: ''
 webapp_location: eastus2
 webapp_repository: https://github.com/MohcineTor/Test-Web-App
@@ -33,3 +33,4 @@ twincache_graphid: MTOR-RefDataSample-GraphId
 terraform_cloud_workspace_id: ''
 powerbi_workspace_id: ""
 powerbi_api_scope: https://analysis.windows.net/powerbi/api/.default
+datasetId: ''
