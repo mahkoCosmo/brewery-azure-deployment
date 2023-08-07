@@ -12,7 +12,7 @@ simulator_repository: simulator_simulator
 simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
 send_scenario_metadata_to_event_hub: true
 use_dedicated_event_hub_namespace: true
-deployment_name: AssetMTORwebapp-$(date "+%Y-%m-%d_%H:%M:%S")
+deployment_name: AssetMTORwebapp
 webapp_domain: ''
 webapp_location: eastus2
 webapp_repository: https://github.com/MohcineTor/Test-Web-App
