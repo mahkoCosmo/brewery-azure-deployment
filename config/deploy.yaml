@@ -1,7 +1,7 @@
 organization_id: ''
 solution_id: ''
 workspace_id: ''
-workspace_key: a7wkDMtorv1
+workspace_key: a7wkDMtorv2
 api_url: https://dev.api.cosmotech.com/v2-4-dev
 resource_group_name: phoenixdev
 resources_location: westeurope
@@ -12,7 +12,7 @@ simulator_repository: simulator_simulator
 simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
 send_scenario_metadata_to_event_hub: true
 use_dedicated_event_hub_namespace: true
-deployment_name: AssetMTORwebapp
+deployment_name: AssetMTORv1webapp
 webapp_domain: ''
 webapp_location: eastus2
 webapp_repository: https://github.com/MohcineTor/Test-Web-App
