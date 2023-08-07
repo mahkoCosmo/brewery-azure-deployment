@@ -9,10 +9,10 @@ adx_database_name: ''
 digital_twin_url: ''
 csm_simulator_repository: csmenginesdev
 simulator_repository: simulator_simulator
-simulator_version: ASSET_v14.2.0_2023-05-30-10h25-06Z
+simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
 send_scenario_metadata_to_event_hub: true
 use_dedicated_event_hub_namespace: true
-deployment_name: Assetmtortestv1webapp
+deployment_name: AssetMTORwebapp-$(date "+%Y-%m-%d_%H:%M:%S")
 webapp_domain: ''
 webapp_location: eastus2
 webapp_repository: https://github.com/MohcineTor/Test-Web-App

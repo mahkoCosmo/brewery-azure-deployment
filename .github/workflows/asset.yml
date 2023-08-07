@@ -115,11 +115,13 @@ jobs:
       
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
+        run : |
+          CDATE=$(date "+%Y-%m-%d_%H:%M:%S")
         with: 
-          workspace_name: asset_dashboard_v20
+          workspace_name: asset_dashboard_$CDATE
           user_name: mohcine.tor@cosmotech.com
-          # database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
-          # cluster_name: phoenixdev
+          database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
+          cluster_name: phoenixdev
 
       - name: deploy webapp
         continue-on-error: true
