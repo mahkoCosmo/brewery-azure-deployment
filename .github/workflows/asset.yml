@@ -110,11 +110,13 @@ jobs:
           echo "hostname=$(babylon config get-variable deploy 'webapp_static_domain')" >> $GITHUB_OUTPUT
           echo "dadt=$(babylon config get-variable deploy 'adt_dataset_id')" >> $GITHUB_OUTPUT
           echo "wpi=$(babylon config get-variable deploy 'webapp_principal_id')" >> $GITHUB_OUTPUT
-      
+
+      - name : set CDATE variable
+        run : |
+            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")
+
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
-        run : |
-          CDATE=$(date "+%Y-%m-%d_%H:%M:%S")
         with: 
           workspace_name: asset_dashboard_$CDATE
           user_name: mohcine.tor@cosmotech.com
