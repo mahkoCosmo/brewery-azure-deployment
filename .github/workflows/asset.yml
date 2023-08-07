@@ -115,6 +115,7 @@ jobs:
         id : date
         run : |
             CDATE=$(date "+%Y-%m-%d_%H:%M:%S")
+            echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
 
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
