@@ -122,8 +122,8 @@ jobs:
         with: 
           workspace_name: asset_dashboard_${{ steps.date.outputs.CDATE }}
           user_name: mohcine.tor@cosmotech.com
-          # database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
-          # cluster_name: phoenixdev
+          database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
+          cluster_name: phoenixdev
 
       - name: deploy webapp
         continue-on-error: true
