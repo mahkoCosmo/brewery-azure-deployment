@@ -46,12 +46,12 @@ jobs:
           deploy: ${{ steps.deploy.outputs.result }}
           platform: ${{ steps.platform.outputs.result }}
 
-      # - name: create a new organization
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
-      #   with:
-      #     name: "Asset Org Cosmo Tech"
-      #     email: mohcine.tor@cosmotech.com
-      #     role: admin
+      - name: create a new organization
+        uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
+        with:
+          name: "Asset Org Cosmo Tech"
+          email: mohcine.tor@cosmotech.com
+          role: admin
 
       - name: create container storage by default
         uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
@@ -122,8 +122,8 @@ jobs:
         with: 
           workspace_name: asset_dashboard_${{ steps.date.outputs.CDATE }}
           user_name: mohcine.tor@cosmotech.com
-          database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
-          cluster_name: phoenixdev
+          # database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
+          # cluster_name: phoenixdev
 
       - name: deploy webapp
         continue-on-error: true
