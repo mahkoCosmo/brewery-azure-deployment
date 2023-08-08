@@ -46,12 +46,12 @@ jobs:
           deploy: ${{ steps.deploy.outputs.result }}
           platform: ${{ steps.platform.outputs.result }}
 
-      - name: create a new organization
-        uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
-        with:
-          name: "Asset Org Cosmo Tech"
-          email: mohcine.tor@cosmotech.com
-          role: admin
+      # - name: create a new organization
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
+      #   with:
+      #     name: "Asset Org Cosmo Tech"
+      #     email: mohcine.tor@cosmotech.com
+      #     role: admin
 
       - name: create container storage by default
         uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
