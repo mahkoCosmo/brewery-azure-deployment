@@ -1,4 +1,4 @@
-name: Asset Solution Deployment
+name: Asset Solution Deployment dev
 
 on:
   push:
