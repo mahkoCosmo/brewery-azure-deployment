@@ -1,9 +1,4 @@
-name: Asset Solution Test Dev
-
-env:
-  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+name: Asset Solution Deployment
 
 on:
   push:
@@ -19,95 +14,75 @@ jobs:
     env:
       dir: personal
       config_path: ./config
+      CONTEXT_ID: "asset"
+      PLATFORM_ID: "dev"
     steps:
       - uses: actions/checkout@v3
 
       - name: install babylon
         uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
         with: 
-          branch: MTOR/report_upload
-    
-      - id: deploy
-        name: retrieve deploy keys from local folder
-        uses: mikefarah/yq@master
-        with:
-          cmd: yq -o=json $config_path/deploy.yaml
-      - id: platform
-        name: retrieve platform keys from local folder
-        uses: mikefarah/yq@master
-        with:
-          cmd: yq -o=json $config_path/platform.yaml
-    
-      - name: setup babylon config
-        uses: Cosmo-Tech/babylon-actions/.github/actions/config@asset
-        with:
-          deploy: ${{ steps.deploy.outputs.result }}
-          platform: ${{ steps.platform.outputs.result }}
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
+      - name: Setup basic configuration
+        uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
+        with: 
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
+          email: mohcine.tor@cosmotech.com
+          user_principal_id: 67bf46cc-38ec-4f23-aba7-fedfcde26856
+          workspace_key: BabyAsset
+          team_id: 25d59980-4644-4ba0-af6f-2ce9fae86c96
+          simulator_image_docker: simulator_simulator
+          simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
+          uri_artifact_zip: https://github.com/Cosmo-Tech/supplychain-azure-function-dataset-download/releases/download/2.1.10/artifact.zip
+          deployment_name: devassetv1
+          location: eastus2
+          repo_to: azure-webapp-asset-qa
+          repo_to_branch: dev/asset
+          organization: Cosmo-Tech
+      
       - name: create a new organization
         uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
         with:
           name: "Asset Org Cosmo Tech"
           email: mohcine.tor@cosmotech.com
           role: admin
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name: create container storage by default
         uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
-        
-      - name: get azure team id
-        id: azureteam
-        run: |
-          cd $dir
-          azure_team_id=$(babylon config get-variable platform 'azure_team_id')
-          echo "azure_team_id=$azure_team_id" >> $GITHUB_OUTPUT
+        with:
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name: deploy adx database and permissions
         uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
         with:
-          team_id: ${{ steps.azureteam.outputs.azure_team_id }}
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name: deploy eventhub namespaces and permissions
         uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
         with:
-          team_id: ${{ steps.azureteam.outputs.azure_team_id }}
-
-      - name: set pat in babylon for deploy
-        uses: Cosmo-Tech/babylon-actions/.github/actions/pat@asset
-        with:
-          pat: ${{ secrets.PAT }}
+          name: "Asset Eventhub Deploy"
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
       
-      - name: retrieve sample webapp
-        continue-on-error: true
-        uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
+      - name: az login
+        uses: azure/login@v1
         with:
-          repo_from: Cosmo-Tech/phoenix-asset-product-webapp
-          repo_tag: upstream/deployment/dev1
-          repo_to: MohcineTor/Test-Web-App
-          repo_to_branch: deploy/asset
-          username: mohcine
-          email: mohcine.tor@cosmotech.com
-          pat: ${{ secrets.PAT }}
-
-      - name: Retrieve babylon variables
-        id: baby_vars
-        run: |
-          cd $dir
-          rg=$(babylon config get-variable deploy 'resource_group_name')
-          org=$(babylon config get-variable deploy 'organization_id')
-          wk=$(babylon config get-variable deploy 'workspace_key')
-          echo "rg=$rg" >> $GITHUB_OUTPUT
-          echo "org=$org" >> $GITHUB_OUTPUT
-          echo "wk=$wk" >> $GITHUB_OUTPUT
-          echo "adxdatabasename=$(echo $org-$wk | tr [:upper:] [:lower:])" >> $GITHUB_OUTPUT
-          echo "azfname=$(echo $org-$wk | tr [:upper:] [:lower:])" >> $GITHUB_OUTPUT
-          echo "namespace=$(echo $org-$wk | tr [:upper:] [:lower:])" >> $GITHUB_OUTPUT
-          echo "adt=$(babylon config get-variable deploy 'digital_twin_url')" >> $GITHUB_OUTPUT
-          echo "adx=$(babylon config get-variable deploy 'adx_database_name')" >> $GITHUB_OUTPUT
-          echo "cadt=$(babylon config get-variable deploy 'adt_connector_id')" >> $GITHUB_OUTPUT
-          echo "sadt=$(babylon config get-variable deploy 'storage_connector_id')" >> $GITHUB_OUTPUT
-          echo "hostname=$(babylon config get-variable deploy 'webapp_static_domain')" >> $GITHUB_OUTPUT
-          echo "dadt=$(babylon config get-variable deploy 'adt_dataset_id')" >> $GITHUB_OUTPUT
-          echo "wpi=$(babylon config get-variable deploy 'webapp_principal_id')" >> $GITHUB_OUTPUT
+          creds: ${{ secrets.AZ_CREDENTIALS }}
+        
+      # add this action
+      - name: Authentication Eventhub configuration
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
+        with:
+          resource_group: phoenixdev
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name : set CDATE variable
         id : date
@@ -118,106 +93,108 @@ jobs:
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with: 
-          workspace_name: asset_dashboard_${{ steps.date.outputs.CDATE }}
-          user_name: mohcine.tor@cosmotech.com
-          database_name: ${{ steps.baby_vars.outputs.adxdatabasename }}
-          cluster_name: phoenixdev
+          workspace_name: Asset_Dashboard_${{ steps.date.outputs.CDATE }}
+          type_dashboard_view: dashboard_view
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
+
+      - name: retrieve sample webapp
+        continue-on-error: true
+        uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
+        with:
+          repo_from: Cosmo-Tech/phoenix-asset-product-webapp
+          repo_tag: upstream/deployment/dev1
+          repo_to: Cosmo-Tech/azure-webapp-asset-qa
+          repo_to_branch: dev/asset
+          username: mohcine
+          email: mohcine.tor@cosmotech.com
 
       - name: deploy webapp
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
         with:
-          powerbi: true
-          azf: true
-
-      - name: az login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZ_CREDENTIALS }}
-
-      - name: retrieve azf key
-        id: azf
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
+      
+      - name: retrieve deployment name field
+        id: retrieve-deployment-name
+        run: |
+          deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
+          echo "deployment_name=$deployment_name" >> $GITHUB_OUTPUT
         env:
-          rg: ${{ steps.baby_vars.outputs.rg }}
-          azfname: ${{ steps.baby_vars.outputs.azfname }}        
+          DEPLOYMENT_NAME: ${{ steps.retrieve-deployment-name.outputs.deployment_name }}
+
+      - name: increment deployment name field
+        id: idnf
+        if: ${{ env.DEPLOYMENT_NAME != ''}}
         run: |
-          azf_key=$(az functionapp keys list -g $rg -n $azfname --query masterKey)
-          echo "azf_key=$azf_key" >> $GITHUB_OUTPUT
+            deployment_name=${{ env.DEPLOYMENT_NAME }}
+            value="${deployment_name#*v}"
+            new_value=$((value + 1))
+            new_string="${deployment_name/devassetv${value}/devasset${new_value}}"
+            babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_string
+            
+      # add this action
+      # - name: Retrieve azure function key
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
+      #   with:
+      #     resource_group: phoenixdev
+      #     context_id: ${{ env.CONTEXT_ID }}
+      #     platform_id: ${{ env.PLATFORM_ID }}
 
-      - name: set azf key
-        run: |
-          cd $dir
-          babylon config set-variable secrets azf.key ${{ steps.azf.outputs.azf_key }}
-
-      - name: retrieve hub keys
-        id: hub
-        env:
-          rg: ${{ steps.baby_vars.outputs.rg }}
-          namespace: ${{ steps.baby_vars.outputs.namespace }}
-          keyname: RootManageSharedAccessKey
-        run: |
-          hub_key=$(az eventhubs namespace authorization-rule keys list -g $rg --namespace-name $namespace --name $keyname --query primaryKey)
-          echo "hub_key=$hub_key" >> $GITHUB_OUTPUT 
-
-      - name: set event hub key
-        run: |
-          cd $dir
-          babylon config set-variable secrets eventhub.key ${{ steps.hub.outputs.hub_key }}
-
-      - name: create twin connector
-        uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
-        with:
-          type: twin
-          name: "Asset Baby Connector Twin"
-
-      # - name: create adt connector
+      # - name: create twin connector
       #   uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
       #   with:
-      #     type: adt
-      #     name: "Asset Baby Connector ADT"
+      #     type: twin
+      #     version: 0.1.1
+      #     name: "Asset Baby connector TWIN"
+      #     context_id: ${{ env.CONTEXT_ID }}
+      #     platform_id: ${{ env.PLATFORM_ID }}
+
+      # - name: create dataset twin
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
+      #   with:
+      #     type: twin
+      #     name: "Asset Baby dataset Twin"
+      #     context_id: ${{ env.CONTEXT_ID }}
+      #     platform_id: ${{ env.PLATFORM_ID }}
+
 
       - name: create connector storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
         with:
           type: storage
+          version: 1.1.2
           name: "Asset Baby connector STORAGE"
-
-      # - name: create dataset adt
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
-      #   with:
-      #     type: adt
-      #     name: "Asset Baby dataset ADT"
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
       
-      - name: create dataset twin
+      - name: create dataset storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
         with:
-          type: twin
-          name: "Asset Baby dataset Twin"
-
-      - name: Retrieve babylon variables
-        id: baby_wpi
-        run: |
-          cd $dir
-          echo "wpi=$(babylon config get-variable deploy 'webapp_principal_id')" >> $GITHUB_OUTPUT
-
-      - name: add adt permission to webapp
-        uses: Cosmo-Tech/babylon-actions/.github/actions/permission@asset
-        with:
-          pi: ${{ steps.baby_wpi.outputs.wpi }}
-          ri: Microsoft.DigitalTwins/digitalTwinsInstances
+          type: storage
+          name: "Asset Baby dataset STORAGE"
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name: create solution Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
         with:
-          name: "Asset Solution Test"
+          name: "Asset Solution Deploy"
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name: create workspace Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
         with:
           name: Asset Baby Workspace
           email: mohcine.tor@cosmotech.com
+          role: admin
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
-      - name: set key api
-        run: |
-          cd $dir
-          babylon api workspace setkey
+      - name: upload CSV file asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
+        with:
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
