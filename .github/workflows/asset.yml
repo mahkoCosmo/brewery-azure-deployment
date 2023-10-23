@@ -21,7 +21,10 @@ jobs:
 
       - name: install babylon
         uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
-        with: 
+        with:
+          BABYLON_SERVICE: ${{ secrets.BABYLON_SERVICE }}
+          BABYLON_TOKEN: ${{ secrets.BABYLON_TOKEN }}
+          BABYLON_ORG_NAME: cosmotech
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
@@ -87,7 +90,7 @@ jobs:
       - name : set CDATE variable
         id : date
         run : |
-            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")
+            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1)
             echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
 
       - name : deploy workspace powerbi
@@ -129,10 +132,9 @@ jobs:
         if: ${{ env.DEPLOYMENT_NAME != ''}}
         run: |
             deployment_name=${{ env.DEPLOYMENT_NAME }}
-            value="${deployment_name#*v}"
-            new_value=$((value + 1))
-            new_string="${deployment_name/devassetv${value}/devasset${new_value}}"
-            babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_string
+            random_string=$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1)
+            new_deployment_name="${deployment_name}_${random_string}"
+            babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
             
       # add this action
       # - name: Retrieve azure function key
