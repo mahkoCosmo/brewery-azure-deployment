@@ -4,6 +4,8 @@ env:
   BABYLON_SERVICE: ${{ secrets.BABYLON_SERVICE }}
   BABYLON_TOKEN: ${{ secrets.BABYLON_TOKEN }}
   BABYLON_ORG_NAME: cosmotech
+  WORKSPACE_NAME: Asset_Dashboard_$(date '+%Y-%m-%d_%H:%M:%S')_$(LC_CTYPE=C tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 4 | head -n 1)
+
 
 on:
   push:
@@ -98,16 +100,16 @@ jobs:
       #       CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1)
       #       echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
 
-      - name: Generate Workspace Name
-        id: workspace-name
-        run: |
-          echo "Asset_Dashboard_$(date '+%Y-%m-%d_%H:%M:%S')_$(LC_CTYPE=C tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 4 | head -n 1)" >> $GITHUB_ENV
-        shell: bash
+      # - name: Generate Workspace Name
+      #   id: workspace-name
+      #   run: |
+      #     echo "Asset_Dashboard_$(date '+%Y-%m-%d_%H:%M:%S')_$(LC_CTYPE=C tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 4 | head -n 1)" >> $GITHUB_ENV
+      #   shell: bash
 
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with: 
-          workspace_name: ${{ env.workspace-name }}
+          workspace_name: ${{ env.WORKSPACE_NAME }}
           type_dashboard_view: dashboard_view
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
