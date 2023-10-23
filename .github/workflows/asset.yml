@@ -85,6 +85,9 @@ jobs:
           echo "SUBSCRIPTION_ID=${{ secrets.SUBSCRIPTION_ID }}" >> $GITHUB_ENV
           echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
 
+      - name: Verify Azure CLI installation
+        run: az --version
+
       - name: Azure Login
         uses: azure/login@v1
         with:
