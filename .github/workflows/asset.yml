@@ -1,5 +1,10 @@
 name: Asset Solution Deployment dev
 
+env:
+  BABYLON_SERVICE: ${{ secrets.BABYLON_SERVICE }}
+  BABYLON_TOKEN: ${{ secrets.BABYLON_TOKEN }}
+  BABYLON_ORG_NAME: cosmotech
+
 on:
   push:
     branches:
@@ -22,9 +27,9 @@ jobs:
       - name: install babylon
         uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
         with:
-          BABYLON_SERVICE: ${{ secrets.BABYLON_SERVICE }}
-          BABYLON_TOKEN: ${{ secrets.BABYLON_TOKEN }}
-          BABYLON_ORG_NAME: cosmotech
+          BABYLON_SERVICE: ${{ env.BABYLON_SERVICE }}
+          BABYLON_TOKEN: ${{ env.BABYLON_TOKEN }}
+          BABYLON_ORG_NAME: ${{ env.BABYLON_ORG_NAME }}
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
