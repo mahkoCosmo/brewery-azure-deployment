@@ -95,7 +95,7 @@ jobs:
       - name : set CDATE variable
         id : date
         run : |
-            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1)
+            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")
             echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
 
       # - name: Generate Workspace Name
