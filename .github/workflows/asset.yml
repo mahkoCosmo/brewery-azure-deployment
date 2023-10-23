@@ -96,9 +96,7 @@ jobs:
       - name: az login
         uses: azure/login@v1
         with:
-          client-id: ${{ env.CLIENT_ID }}
-          tenant-id: ${{ env.TENANT_ID }}
-          subscription-id: ${{ env.SUBSCRIPTION_ID }}
+          creds: ${{ secrets.AZ_CREDENTIALS }}   
         
       # add this action
       - name: Authentication Eventhub configuration
