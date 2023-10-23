@@ -95,7 +95,7 @@ jobs:
       - name : set CDATE variable
         id : date
         run : |
-            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")
+            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(python -c 'import random, string; print("".join(random.choices(string.ascii_letters + string.digits, k=4))')')
             echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
 
       # - name: Generate Workspace Name
