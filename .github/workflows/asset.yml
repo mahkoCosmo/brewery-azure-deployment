@@ -4,6 +4,7 @@ env:
   BABYLON_SERVICE: ${{ secrets.BABYLON_SERVICE }}
   BABYLON_TOKEN: ${{ secrets.BABYLON_TOKEN }}
   BABYLON_ORG_NAME: cosmotech
+  AZ_CREDENTIALS: ${{ secrets.AZ_CREDENTIALS }}
 
 on:
   push:
@@ -82,7 +83,7 @@ jobs:
       - name: az login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZ_CREDENTIALS }}
+          creds: ${{ env.AZ_CREDENTIALS }}
         
       # add this action
       - name: Authentication Eventhub configuration
