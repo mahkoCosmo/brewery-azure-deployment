@@ -4,7 +4,6 @@ env:
   BABYLON_SERVICE: ${{ secrets.BABYLON_SERVICE }}
   BABYLON_TOKEN: ${{ secrets.BABYLON_TOKEN }}
   BABYLON_ORG_NAME: cosmotech
-  AZ_CREDENTIALS: ${{ secrets.AZ_CREDENTIALS }}
 
 on:
   push:
@@ -79,11 +78,22 @@ jobs:
           name: "Asset_Eventhub_Deploy"
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
-      
-      - name: az login
+
+      - name: Set up environment variables
+        run: |
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
+          echo "SUBSCRIPTION_ID=${{ secrets.SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+          echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
+
+      - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ env.AZ_CREDENTIALS }}
+          creds: '{"clientId": ${{ env.CLIENT_ID }}, "clientSecret": ${{ secrets.CLIENT_SECRET }}, "subscriptionId": ${{ env.SUBSCRIPTION_ID }}, "tenantId": ${{ env.TENANT_ID }}"}'
+
+      # - name: az login
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: ${{ env.AZ_CREDENTIALS }}
         
       # add this action
       - name: Authentication Eventhub configuration
