@@ -24,74 +24,60 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: install babylon
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
-      #   with:
-      #     BABYLON_SERVICE: ${{ env.BABYLON_SERVICE }}
-      #     BABYLON_TOKEN: ${{ env.BABYLON_TOKEN }}
-      #     BABYLON_ORG_NAME: ${{ env.BABYLON_ORG_NAME }}
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      - name: install babylon
+        uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
+        with:
+          BABYLON_SERVICE: ${{ env.BABYLON_SERVICE }}
+          BABYLON_TOKEN: ${{ env.BABYLON_TOKEN }}
+          BABYLON_ORG_NAME: ${{ env.BABYLON_ORG_NAME }}
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name: Setup basic configuration
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
-      #   with: 
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
-      #     email: mohcine.tor@cosmotech.com
-      #     user_principal_id: 67bf46cc-38ec-4f23-aba7-fedfcde26856
-      #     workspace_key: BabyAsset
-      #     team_id: 25d59980-4644-4ba0-af6f-2ce9fae86c96
-      #     simulator_image_docker: simulator_simulator
-      #     simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
-      #     uri_artifact_zip: https://github.com/Cosmo-Tech/supplychain-azure-function-dataset-download/releases/download/2.1.10/artifact.zip
-      #     deployment_name: devassetv1
-      #     location: eastus2
-      #     repo_to: azure-webapp-asset-qa
-      #     repo_to_branch: dev/asset
-      #     organization: Cosmo-Tech
+      - name: Setup basic configuration
+        uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
+        with: 
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
+          email: mohcine.tor@cosmotech.com
+          user_principal_id: 67bf46cc-38ec-4f23-aba7-fedfcde26856
+          workspace_key: BabyAsset
+          team_id: 25d59980-4644-4ba0-af6f-2ce9fae86c96
+          simulator_image_docker: simulator_simulator
+          simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
+          uri_artifact_zip: https://github.com/Cosmo-Tech/supplychain-azure-function-dataset-download/releases/download/2.1.10/artifact.zip
+          deployment_name: devassetv1
+          location: eastus2
+          repo_to: azure-webapp-asset-qa
+          repo_to_branch: dev/asset
+          organization: Cosmo-Tech
       
-      # - name: create a new organization
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
-      #   with:
-      #     name: "Asset_Org_Cosmo_Tech"
-      #     email: mohcine.tor@cosmotech.com
-      #     role: admin
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      - name: create a new organization
+        uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
+        with:
+          name: "Asset_Org_Cosmo_Tech"
+          email: mohcine.tor@cosmotech.com
+          role: admin
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name: create container storage by default
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
-      #   with:
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      - name: create container storage by default
+        uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
+        with:
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name: deploy adx database and permissions
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
-      #   with:
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      - name: deploy adx database and permissions
+        uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
+        with:
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name: deploy eventhub namespaces and permissions
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
-      #   with:
-      #     name: "Asset_Eventhub_Deploy"
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
-
-      - name: Set up environment variables
-        run: |
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
-          echo "SUBSCRIPTION_ID=${{ secrets.SUBSCRIPTION_ID }}" >> $GITHUB_ENV
-          echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
-
-      - name: Verify Azure CLI installation
-        run: az --version
-
-      # - name: Azure Login
-      #   uses: azure/login@v1
-      #   with:
-      #     creds: '{"clientId": ${{ env.CLIENT_ID }}, "clientSecret": ${{ secrets.CLIENT_SECRET }}, "subscriptionId": ${{ env.SUBSCRIPTION_ID }}, "tenantId": ${{ env.TENANT_ID }}"}'
+      - name: deploy eventhub namespaces and permissions
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
+        with:
+          name: "Asset_Eventhub_Deploy"
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name: azure login
         uses: Azure/login@v1
