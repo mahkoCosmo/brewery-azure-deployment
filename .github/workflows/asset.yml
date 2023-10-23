@@ -92,22 +92,22 @@ jobs:
       #     context_id: ${{ env.CONTEXT_ID }}
       #     platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name : set CDATE variable
-      #   id : date
-      #   run : |
-      #       CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1)
-      #       echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
+      - name : set CDATE variable
+        id : date
+        run : |
+            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1)
+            echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
 
-      - name: Generate Workspace Name
-        id: workspace-name
-        run: |
-          echo "Asset_Dashboard_$(date '+%Y-%m-%d_%H:%M:%S')" >> $GITHUB_ENV
-        shell: bash
+      # - name: Generate Workspace Name
+      #   id: workspace-name
+      #   run: |
+      #     echo "Asset_Dashboard_$(date '+%Y-%m-%d_%H:%M:%S')" >> $GITHUB_ENV
+      #   shell: bash
 
       - name : deploy workspace powerbi
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with: 
-          workspace_name: ${{ env.workspace-name }}
+          workspace_name: asset_dashboard_${{ steps.date.outputs.CDATE }}
           type_dashboard_view: dashboard_view
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
