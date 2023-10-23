@@ -98,7 +98,7 @@ jobs:
             CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
             echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
 
-      - name : deploy workspace powerbi v1
+      - name : deploy workspace powerbi 
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with: 
           workspace_name: asset_dashboard_${{ steps.date.outputs.CDATE }}
