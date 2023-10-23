@@ -60,11 +60,11 @@ jobs:
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name: create container storage by default
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
-      #   with:
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      - name: create container storage by default
+        uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
+        with:
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name: deploy adx database and permissions
         uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
@@ -72,25 +72,25 @@ jobs:
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name: deploy eventhub namespaces and permissions
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
-      #   with:
-      #     name: "Asset_Eventhub_Deploy"
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      - name: deploy eventhub namespaces and permissions
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
+        with:
+          name: "Asset_Eventhub_Deploy"
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
-      # - name: azure login
-      #   uses: Azure/login@v1
-      #   with:
-      #     creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+      - name: azure login
+        uses: Azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
             
-      # # add this action
-      # - name: Authentication Eventhub configuration
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
-      #   with:
-      #     resource_group: phoenixdev
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      # add this action
+      - name: Authentication Eventhub configuration
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
+        with:
+          resource_group: phoenixdev
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       - name : Generate Workspace Name
         id : date
