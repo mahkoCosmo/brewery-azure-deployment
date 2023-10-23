@@ -88,15 +88,17 @@ jobs:
       - name: Verify Azure CLI installation
         run: az --version
 
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: '{"clientId": ${{ env.CLIENT_ID }}, "clientSecret": ${{ secrets.CLIENT_SECRET }}, "subscriptionId": ${{ env.SUBSCRIPTION_ID }}, "tenantId": ${{ env.TENANT_ID }}"}'
-
-      # - name: az login
+      # - name: Azure Login
       #   uses: azure/login@v1
       #   with:
-      #     creds: ${{ env.AZ_CREDENTIALS }}
+      #     creds: '{"clientId": ${{ env.CLIENT_ID }}, "clientSecret": ${{ secrets.CLIENT_SECRET }}, "subscriptionId": ${{ env.SUBSCRIPTION_ID }}, "tenantId": ${{ env.TENANT_ID }}"}'
+
+      - name: az login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ env.CLIENT_ID }}
+          tenant-id: ${{ env.TENANT_ID }}
+          subscription-id: ${{ env.SUBSCRIPTION_ID }}
         
       # add this action
       - name: Authentication Eventhub configuration
