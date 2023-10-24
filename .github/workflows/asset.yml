@@ -100,7 +100,8 @@ jobs:
 
       - name : deploy workspace powerbi 
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
-        with: 
+        with:
+          BABYLON_ENCODING_KEY: ${{ secrets.BABYLON_ENCODING_KEY }} 
           workspace_name: asset_dashboard_${{ steps.date.outputs.CDATE }}
           type_dashboard_view: dashboard_view
           context_id: ${{ env.CONTEXT_ID }}
