@@ -110,12 +110,13 @@ jobs:
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
         with:
-          repo_from: Cosmo-Tech/phoenix-asset-product-webapp
+          repo_from: phoenix-asset-product-webapp
           repo_tag: upstream/deployment/dev1
-          repo_to: Cosmo-Tech/azure-webapp-asset-qa
+          repo_to: azure-webapp-asset-qa
           repo_to_branch: dev/asset
           username: mohcine
           email: mohcine.tor@cosmotech.com
+          pat: ${{ secrets.PAT }}
 
       - name: deploy webapp
         continue-on-error: true
@@ -124,19 +125,18 @@ jobs:
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
       
-      - name: retrieve deployment name field
-        id: retrieve-deployment-name
-        run: |
-          deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
-          echo "deployment_name=$deployment_name" >> $GITHUB_OUTPUT
-        env:
-          DEPLOYMENT_NAME: ${{ steps.retrieve-deployment-name.outputs.deployment_name }}
+      # - name: retrieve deployment name field
+      #   id: retrieve-deployment-name
+      #   run: |
+      #     deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
+      #     echo "deployment_name=$deployment_name" >> $GITHUB_OUTPUT
+      #   # env:
+      #   #   DEPLOYMENT_NAME: ${{ steps.retrieve-deployment-name.outputs.deployment_name }}
 
       - name: increment deployment name field
         id: idnf
-        if: ${{ env.DEPLOYMENT_NAME != ''}}
         run: |
-            deployment_name=${{ env.DEPLOYMENT_NAME }}
+            deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
             random_string=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
             new_deployment_name="${deployment_name}_${random_string}"
             babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
