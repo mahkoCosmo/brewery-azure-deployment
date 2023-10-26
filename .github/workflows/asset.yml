@@ -136,6 +136,7 @@ jobs:
       - name: increment deployment name field
         id: idnf
         run: |
+            cd ${{ env.dir }}
             deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
             echo $deployment_name
             random_string=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
