@@ -45,7 +45,7 @@ jobs:
           simulator_image_docker: simulator_simulator
           simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
           uri_artifact_zip: https://github.com/Cosmo-Tech/supplychain-azure-function-dataset-download/releases/download/2.1.10/artifact.zip
-          deployment_name: devassetv1
+          deployment_name: devasset
           location: eastus2
           repo_to: azure-webapp-asset-qa
           repo_to_branch: dev/asset
@@ -117,22 +117,7 @@ jobs:
           username: mohcine
           email: mohcine.tor@cosmotech.com
           pat: ${{ secrets.PAT }}
-
-      - name: deploy webapp
-        continue-on-error: true
-        uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
-        with:
-          context_id: ${{ env.CONTEXT_ID }}
-          platform_id: ${{ env.PLATFORM_ID }}
       
-      # - name: retrieve deployment name field
-      #   id: retrieve-deployment-name
-      #   run: |
-      #     deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
-      #     echo "deployment_name=$deployment_name" >> $GITHUB_OUTPUT
-      #   # env:
-      #   #   DEPLOYMENT_NAME: ${{ steps.retrieve-deployment-name.outputs.deployment_name }}
-
       - name: increment deployment name field
         id: idnf
         run: |
@@ -143,6 +128,13 @@ jobs:
             new_deployment_name=${deployment_name}_${random_string}
             echo $new_deployment_name
             babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
+
+      - name: deploy webapp
+        continue-on-error: true
+        uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
+        with:
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
             
       # add this action
       # - name: Retrieve azure function key
@@ -186,6 +178,10 @@ jobs:
           name: "Asset_Baby_dataset_STORAGE"
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
+
+      - name : Add content to runTemplates field
+        run: |
+            cp $config_path/asset.dev.solution.yaml ${{ env.dir }}/.payload/
 
       - name: create solution Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset

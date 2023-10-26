@@ -1,0 +1,26 @@
+key: ${key}
+name: ${name}
+description: "${tag} solution"
+repository: ${cosmotech['acr']['simulator_repository']}
+version: ${cosmotech['acr']['simulator_version']}
+tags:
+- ${tag}
+parameters:
+runTemplates:
+  - id: 'common'
+    name: Standard simulation
+    description: MR Simulation
+    csmSimulation: AzureWebApp/AzureWebApp_Simulation
+    orchestratorType: argo-workflow
+    tags:
+      - MR
+      - Asset
+    fetchDatasets: true
+    fetchScenarioParameters: true
+    applyParameters: true
+    sendDatasetsToDataWarehouse: false
+    sendInputParametersToDataWarehouse: false
+    preRun: true
+    run: true
+    runSource: local
+parameterGroups:
