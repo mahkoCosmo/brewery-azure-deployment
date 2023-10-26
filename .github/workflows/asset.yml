@@ -182,7 +182,7 @@ jobs:
       - name : Add content to runTemplates field
         run: |
             cp $config_path/asset.dev.solution.yaml ${{ env.dir }}/.payload/
-
+            
       - name: create solution Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
         with:
