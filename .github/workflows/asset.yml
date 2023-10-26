@@ -110,9 +110,9 @@ jobs:
         continue-on-error: true
         uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
         with:
-          repo_from: phoenix-asset-product-webapp
+          repo_from: Cosmo-Tech/phoenix-asset-product-webapp
           repo_tag: upstream/deployment/dev1
-          repo_to: azure-webapp-asset-qa
+          repo_to: Cosmo-Tech/azure-webapp-asset-qa
           repo_to_branch: dev/asset
           username: mohcine
           email: mohcine.tor@cosmotech.com
@@ -137,8 +137,10 @@ jobs:
         id: idnf
         run: |
             deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
+            echo $deployment_name
             random_string=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
-            new_deployment_name="${deployment_name}_${random_string}"
+            new_deployment_name=${deployment_name}_${random_string}
+            echo $new_deployment_name
             babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
             
       # add this action
