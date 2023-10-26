@@ -11,7 +11,7 @@ runTemplates:
     name: Standard simulation
     description: MR Simulation
     csmSimulation: AzureWebApp/AzureWebApp_Simulation
-    orchestratorType: argo-workflow
+    orchestratorType: csmOrc
     tags:
       - MR
       - Asset
