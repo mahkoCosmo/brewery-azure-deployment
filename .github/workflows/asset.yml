@@ -94,15 +94,19 @@ jobs:
       - name : Generate Workspace Name
         id : date
         run : |
-            CDATE=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
-            echo "CDATE=$CDATE" >> $GITHUB_OUTPUT
+            WNDASH=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
+            echo "WNDASH=$WNDASH" >> $GITHUB_OUTPUT
+            WNSENA=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
+            echo "WNSENA=$WNSENA" >> $GITHUB_OUTPUT
 
       - name : deploy workspace powerbi 
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with:
           BABYLON_ENCODING_KEY: ${{ secrets.BABYLON_ENCODING_KEY }} 
-          workspace_name: asset_dashboard_${{ steps.date.outputs.CDATE }}
+          workspace_name_dashboard: asset_dashboard_${{ steps.date.outputs.WNDASH }}
+          workspace_name_scenario: asset_scenario_${{ steps.date.outputs.WNSENA }}
           type_dashboard_view: dashboard_view
+          type_scenario_view: scenario_view
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
