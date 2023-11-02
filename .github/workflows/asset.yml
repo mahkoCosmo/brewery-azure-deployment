@@ -8,21 +8,21 @@ env:
 
 on:
   workflow_dispatch:
-  inputs:
-    context_id:
-      description: 'Select CONTEXT_ID'
-      required: true
-      default: 'asset'
-      options:
-        - 'asset'
-    platform_id:
-      description: 'Select PLATFORM_ID'
-      required: true
-      default: 'dev'
-      options:
-        - 'dev'
-        - 'perf'
-        - 'staging'
+    inputs:
+      context_id:
+        description: 'Select CONTEXT_ID'
+        required: true
+        default: 'asset'
+        options:
+          - 'asset'
+      platform_id:
+        description: 'Select PLATFORM_ID'
+        required: true
+        default: 'dev'
+        options:
+          - 'dev'
+          - 'perf'
+          - 'staging'
   push:
     branches:
       - master
