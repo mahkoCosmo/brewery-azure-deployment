@@ -4,8 +4,25 @@ env:
   BABYLON_SERVICE: ${{ secrets.BABYLON_SERVICE }}
   BABYLON_TOKEN: ${{ secrets.BABYLON_TOKEN }}
   BABYLON_ORG_NAME: cosmotech
+  BABYLON_ENCODING_KEY: ${{ secrets.BABYLON_ENCODING_KEY }}
 
 on:
+  workflow_dispatch:
+  inputs:
+    context_id:
+      description: 'Select CONTEXT_ID'
+      required: true
+      default: 'asset'
+      options:
+        - 'asset'
+    platform_id:
+      description: 'Select PLATFORM_ID'
+      required: true
+      default: 'dev'
+      options:
+        - 'dev'
+        - 'perf'
+        - 'staging'
   push:
     branches:
       - master
@@ -19,17 +36,14 @@ jobs:
     env:
       dir: personal
       config_path: ./config
-      CONTEXT_ID: "asset"
-      PLATFORM_ID: "dev"
+      CONTEXT_ID: ${{ github.event.inputs.context_id || 'asset' }}
+      PLATFORM_ID: ${{ github.event.inputs.platform_id || 'dev' }}
     steps:
       - uses: actions/checkout@v3
 
       - name: install babylon
         uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
         with:
-          BABYLON_SERVICE: ${{ env.BABYLON_SERVICE }}
-          BABYLON_TOKEN: ${{ env.BABYLON_TOKEN }}
-          BABYLON_ORG_NAME: ${{ env.BABYLON_ORG_NAME }}
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
@@ -50,6 +64,7 @@ jobs:
           repo_to: azure-webapp-asset-qa
           repo_to_branch: dev/asset
           organization: Cosmo-Tech
+          api_url: https://dev.api.cosmotech.com/v2-4-dev 
       
       - name: create a new organization
         uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
@@ -102,7 +117,6 @@ jobs:
       - name : deploy workspace powerbi 
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with:
-          BABYLON_ENCODING_KEY: ${{ secrets.BABYLON_ENCODING_KEY }} 
           workspace_name_dashboard: asset_dashboard_${{ steps.date.outputs.WNDASH }}
           workspace_name_scenario: asset_scenario_${{ steps.date.outputs.WNSENA }}
           type_dashboard_view: dashboard_view
