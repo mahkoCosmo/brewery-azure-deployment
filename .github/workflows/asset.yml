@@ -19,6 +19,7 @@ on:
         description: 'Select PLATFORM_ID'
         required: true
         default: 'dev'
+        type: choice
         options:
           - 'dev'
           - 'perf'
