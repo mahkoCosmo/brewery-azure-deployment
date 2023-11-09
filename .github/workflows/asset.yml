@@ -155,12 +155,12 @@ jobs:
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
             
-      # - name: Retrieve azure function key
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
-      #   with:
-      #     resource_group: phoenixdev
-      #     context_id: ${{ env.CONTEXT_ID }}
-      #     platform_id: ${{ env.PLATFORM_ID }}
+      - name: Retrieve azure function key
+        uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
+        with:
+          resource_group: phoenixdev
+          context_id: ${{ env.CONTEXT_ID }}
+          platform_id: ${{ env.PLATFORM_ID }}
 
       # - name: create twin connector
       #   uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
