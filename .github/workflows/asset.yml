@@ -167,7 +167,7 @@ jobs:
         with:
           type: twin
           version: 1.2.0
-          name: "Asset Baby connector TWIN"
+          name: "Asset_Baby_connector_TWIN"
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
@@ -175,7 +175,7 @@ jobs:
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
         with:
           type: twin
-          name: "Asset Baby dataset Twin"
+          name: "Asset_Baby_dataset_Twin"
           context_id: ${{ env.CONTEXT_ID }}
           platform_id: ${{ env.PLATFORM_ID }}
 
