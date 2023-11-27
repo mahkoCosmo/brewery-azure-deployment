@@ -58,8 +58,8 @@ jobs:
           workspace_key: BabyAsset
           team_id: 25d59980-4644-4ba0-af6f-2ce9fae86c96
           simulator_image_docker: simulator_simulator
-          simulator_version: ASSET_5555fc9d_2023-08-03-10h29-09Z
-          uri_artifact_zip: https://github.com/Cosmo-Tech/supplychain-azure-function-dataset-download/releases/download/2.1.10/artifact.zip
+          simulator_version: ASSET_5555fc9d_DEBUG_2023-11-23-15h33
+          uri_artifact_zip: https://github.com/Cosmo-Tech/azure-function-scenario-download/releases/download/v1.0.1/artifact.zip
           deployment_name: devasset
           location: eastus2
           repo_to: azure-webapp-asset-qa
