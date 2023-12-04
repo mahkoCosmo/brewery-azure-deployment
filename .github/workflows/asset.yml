@@ -42,44 +42,44 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: install babylon
-        uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
+      # - name: install babylon
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
 
-      - name: Setup basic configuration
-        uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
-        with: 
-          email: mohcine.tor@cosmotech.com
-          user_principal_id: 67bf46cc-38ec-4f23-aba7-fedfcde26856
-          workspace_key: BabyAsset
-          team_id: 25d59980-4644-4ba0-af6f-2ce9fae86c96
-          simulator_image_docker: simulator_simulator
-          simulator_version: ASSET_5555fc9d_DEBUG_2023-11-23-15h33
-          uri_artifact_zip: https://github.com/Cosmo-Tech/azure-function-scenario-download/releases/download/v1.0.1/artifact.zip
-          deployment_name: devasset
-          location: eastus2
-          repo_to: azure-webapp-asset-qa
-          branch_to: dev/asset
-          organization: Cosmo-Tech
-          api_url: https://dev.api.cosmotech.com/v2-4-dev 
-          item: "common"
+      # - name: Setup basic configuration
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
+      #   with: 
+      #     email: mohcine.tor@cosmotech.com
+      #     user_principal_id: 67bf46cc-38ec-4f23-aba7-fedfcde26856
+      #     workspace_key: BabyAsset
+      #     team_id: 25d59980-4644-4ba0-af6f-2ce9fae86c96
+      #     simulator_image_docker: simulator_simulator
+      #     simulator_version: ASSET_5555fc9d_DEBUG_2023-11-23-15h33
+      #     uri_artifact_zip: https://github.com/Cosmo-Tech/azure-function-scenario-download/releases/download/v1.0.1/artifact.zip
+      #     deployment_name: devasset
+      #     location: eastus2
+      #     repo_to: azure-webapp-asset-qa
+      #     branch_to: dev/asset
+      #     organization: Cosmo-Tech
+      #     api_url: https://dev.api.cosmotech.com/v2-4-dev 
+      #     item: "common"
       
-      - name: create a new organization
-        uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
-        with:
-          name: "Asset_Org_Cosmo_Tech"
-          email: mohcine.tor@cosmotech.com
-          role: admin
+      # - name: create a new organization
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
+      #   with:
+      #     name: "Asset_Org_Cosmo_Tech"
+      #     email: mohcine.tor@cosmotech.com
+      #     role: admin
 
-      - name: create container storage by default
-        uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
+      # - name: create container storage by default
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
 
-      - name: deploy adx database and permissions
-        uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
+      # - name: deploy adx database and permissions
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
 
-      - name: deploy eventhub namespaces and permissions
-        uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
-        with:
-          name: "Asset_Eventhub_Deploy"
+      # - name: deploy eventhub namespaces and permissions
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
+      #   with:
+      #     name: "Asset_Eventhub_Deploy"
 
       - name: azure login
         uses: Azure/login@v1
