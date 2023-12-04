@@ -133,25 +133,12 @@ jobs:
         with:
           resource_group: phoenixdev
 
-      # - name: create twin connector
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
-      #   with:
-      #     type: twin
-      #     version: 0.1.1
-      #     name: "Asset_Baby_connector_TWIN"
-
-      # - name: create dataset twin
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
-      #   with:
-      #     type: twin
-      #     name: "Asset_Baby_dataset_Twin"
-
       - name: create connector storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
         with:
           type: storage
           version: 1.1.2
-          name: "Asset_Baby_onnector_STORAGE"
+          name: "Asset_Baby_Connector_STORAGE"
 
       - name: create dataset storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
