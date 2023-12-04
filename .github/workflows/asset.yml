@@ -42,8 +42,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: install babylon
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
+      - name: install babylon
+        uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
 
       # - name: Setup basic configuration
       #   uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
