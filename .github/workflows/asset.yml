@@ -140,9 +140,9 @@ jobs:
           version: 1.1.2
           name: "Asset_Baby_Connector_STORAGE"
 
-      - name : Add content to runTemplates field
-        run: |
-            cp $config_path/dataset.storage.yaml ${{ env.dir }}/.payload/
+      # - name : Add content to runTemplates field
+      #   run: |
+      #       cp $config_path/dataset.storage.yaml ${{ env.dir }}/.payload/
 
       - name: create dataset storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
