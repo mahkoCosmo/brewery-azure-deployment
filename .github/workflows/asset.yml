@@ -142,7 +142,7 @@ jobs:
 
       - name : Add content to runTemplates field
         run: |
-            cp $config_path/dataset.storage.yaml ${{ env.dir }}/.payload/
+            cp $config_path/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.${{ env.PLATFORM_ID }}.dataset.storage.yaml
 
       - name: create dataset storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
