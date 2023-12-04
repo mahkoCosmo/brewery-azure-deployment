@@ -14,7 +14,8 @@ on:
         description: 'Select CONTEXT_ID'
         required: true
         default: 'asset'
-        options:
+        type: string
+        enum:
           - 'asset'
       platform_id:
         description: 'Select PLATFORM_ID'
