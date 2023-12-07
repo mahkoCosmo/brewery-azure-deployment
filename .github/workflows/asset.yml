@@ -71,67 +71,67 @@ jobs:
           email: mohcine.tor@cosmotech.com
           role: admin
 
-      # - name: create container storage by default
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
+      - name: create container storage by default
+        uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
 
-      # - name: deploy adx database and permissions
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
+      - name: deploy adx database and permissions
+        uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
 
-      # - name: deploy eventhub namespaces and permissions
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
-      #   with:
-      #     name: "Asset_Eventhub_Deploy"
+      - name: deploy eventhub namespaces and permissions
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
+        with:
+          name: "Asset_Eventhub_Deploy"
 
-      # - name: azure login
-      #   uses: Azure/login@v1
-      #   with:
-      #     creds: '{"clientId":"${{ vars.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ vars.SUBSCRIPTION_ID }}","tenantId":"${{ vars.TENANT_ID }}"}'
+      - name: azure login
+        uses: Azure/login@v1
+        with:
+          creds: '{"clientId":"${{ vars.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ vars.SUBSCRIPTION_ID }}","tenantId":"${{ vars.TENANT_ID }}"}'
             
-      # - name: Authentication Eventhub configuration
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
-      #   with:
-      #     resource_group: phoenixdev
+      - name: Authentication Eventhub configuration
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
+        with:
+          resource_group: phoenixdev
 
-      # - name : Generate Workspace Name
-      #   id : GWN
-      #   run : |
-      #       WNDASH=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
-      #       echo "WNDASH=$WNDASH" >> $GITHUB_OUTPUT
-      #       WNSENA=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
-      #       echo "WNSENA=$WNSENA" >> $GITHUB_OUTPUT
+      - name : Generate Workspace Name
+        id : GWN
+        run : |
+            WNDASH=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
+            echo "WNDASH=$WNDASH" >> $GITHUB_OUTPUT
+            WNSENA=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
+            echo "WNSENA=$WNSENA" >> $GITHUB_OUTPUT
 
-      # - name : deploy workspace powerbi 
-      #   uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
-      #   with:
-      #     workspace_name_dashboard: asset_dashboard_${{ steps.GWN.outputs.WNDASH }}
-      #     workspace_name_scenario: asset_scenario_${{ steps.GWN.outputs.WNSENA }}
+      - name : deploy workspace powerbi 
+        uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
+        with:
+          workspace_name_dashboard: asset_dashboard_${{ steps.GWN.outputs.WNDASH }}
+          workspace_name_scenario: asset_scenario_${{ steps.GWN.outputs.WNSENA }}
 
-      # - name: retrieve sample webapp
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
-      #   with:
-      #     repo_from: Cosmo-Tech/phoenix-asset-product-webapp
-      #     branch_from: upstream/deployment/dev1
-      #     repo_to: Cosmo-Tech/azure-webapp-asset-qa
-      #     branch_to: dev/asset
-      #     username: mohcine
-      #     email: mohcine.tor@cosmotech.com
+      - name: retrieve sample webapp
+        uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
+        with:
+          repo_from: Cosmo-Tech/phoenix-asset-product-webapp
+          branch_from: upstream/deployment/dev1
+          repo_to: Cosmo-Tech/azure-webapp-asset-qa
+          branch_to: dev/asset
+          username: mohcine
+          email: mohcine.tor@cosmotech.com
       
-      # - name: increment deployment name field
-      #   id: idnf
-      #   run: |
-      #       cd ${{ env.dir }}
-      #       deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
-      #       random_string=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
-      #       new_deployment_name=${deployment_name}_${random_string}
-      #       babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
+      - name: increment deployment name field
+        id: idnf
+        run: |
+            cd ${{ env.dir }}
+            deployment_name=$(babylon config get -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name)
+            random_string=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 4)
+            new_deployment_name=${deployment_name}_${random_string}
+            babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
 
-      # - name: deploy webapp
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
+      - name: deploy webapp
+        uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
             
-      # - name: Retrieve azure function key
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
-      #   with:
-      #     resource_group: phoenixdev
+      - name: Retrieve azure function key
+        uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
+        with:
+          resource_group: phoenixdev
 
       - name: create connector storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
@@ -140,29 +140,26 @@ jobs:
           version: 1.1.2
           name: "Asset_Baby_Connector_STORAGE"
 
-      - name : Add to runTemplates field
+      - name : Add Templates
         run: |
             cp $config_path/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.${{ env.PLATFORM_ID }}.dataset.storage.yaml
+            cp $config_path/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.${{ env.PLATFORM_ID }}.solution.yaml
 
       - name: create dataset storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
         with:
           type: storage
-          name: "Asset_Baby_dataset_STORAGE"
-
-      # - name : Add content to runTemplates field
-      #   run: |
-      #       cp $config_path/solution.yaml ${{ env.dir }}/.payload/
+          name: "Asset_Baby_dataset_STORAGE" 
             
-      # - name: create solution Asset
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
+      - name: create solution Asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
 
-      # - name: create workspace Asset
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
-      #   with:
-      #     name: Asset_Baby_Workspace
-      #     email: mohcine.tor@cosmotech.com
-      #     role: admin
+      - name: create workspace Asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
+        with:
+          name: Asset_Baby_Workspace
+          email: mohcine.tor@cosmotech.com
+          role: admin
 
-      # - name: upload CSV file asset
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
+      - name: upload CSV file asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
