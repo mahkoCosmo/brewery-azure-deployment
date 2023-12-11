@@ -62,7 +62,9 @@ jobs:
           branch_to: dev/asset
           organization: Cosmo-Tech
           api_url: https://dev.api.cosmotech.com/v2-4-dev 
+          api : "true"
           item: "common"
+          
       
       - name: create a new organization
         uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
