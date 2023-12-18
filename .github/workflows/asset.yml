@@ -177,13 +177,13 @@ jobs:
         uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
       
       # - name: Access Control workspaces
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/emial@asset
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/Access_control@asset
       #   with:
       #     emails: "jean-charles.planchenault@cosmotech.com diamantis.sellis@cosmotech.com"
       #     mode: "workspaces"
 
       - name: Access Control organizations
-        uses: Cosmo-Tech/babylon-actions/.github/actions/emial@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/Access_control@asset
         with:
           emails: "jean-charles.planchenault@cosmotech.com diamantis.sellis@cosmotech.com"
           mode: "organizations"
