@@ -7,7 +7,7 @@ tags:
 - ${tag}
 parameters:
 runTemplates:
-  - id: 'common'
+  - id: ${cosmotech['api']['run_templates']}
     name: Standard simulation
     description: MR Simulation
     csmSimulation: AzureWebApp/AzureWebApp_Simulation

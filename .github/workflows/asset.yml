@@ -144,9 +144,19 @@ jobs:
 
       - name : Add Templates
         run: |
-            cp $config_path/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.${{ env.PLATFORM_ID }}.dataset.storage.yaml
-            cp $config_path/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.${{ env.PLATFORM_ID }}.solution.yaml
-
+            if [ "${{ env.PLATFORM_ID }}" == "dev" ]; then
+              cp $config_path/dev/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.dataset.storage.yaml
+              cp $config_path/dev/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.solution.yaml
+            elif [ "${{ env.PLATFORM_ID }}" == "perf" ]; then
+              cp $config_path/perf/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.dataset.storage.yaml
+              cp $config_path/perf/solution_WP01_performance.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.solution.yaml
+            elif [ "${{ env.PLATFORM_ID }}" == "staging" ]; then
+              cp $config_path/staging/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.dataset.storage.yaml
+              cp $config_path/staging/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.solution.yaml
+            else
+              echo "Unsupported PLATFORM_ID: ${{ env.PLATFORM_ID }}"
+            fi
+            
       - name: create dataset storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
         with:
@@ -165,3 +175,15 @@ jobs:
 
       - name: upload CSV file asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
+      
+      # - name: Access Control workspaces
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/emial@asset
+      #   with:
+      #     emails: "jean-charles.planchenault@cosmotech.com diamantis.sellis@cosmotech.com"
+      #     mode: "workspaces"
+
+      - name: Access Control organizations
+        uses: Cosmo-Tech/babylon-actions/.github/actions/emial@asset
+        with:
+          emails: "jean-charles.planchenault@cosmotech.com diamantis.sellis@cosmotech.com"
+          mode: "organizations"
