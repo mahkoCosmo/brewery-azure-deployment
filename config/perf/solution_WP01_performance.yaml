@@ -18,8 +18,8 @@ runTemplates:
     fetchScenarioParameters: false
     gitBranchName: null
     gitRepositoryUrl: null
-    id: ${cosmotech['api']['run_templates']}
-    name: ${name}
+    id: 'WP03_RunTemplate'
+    name: WP01 Performance
     noDataIngestionState: false
     parameterGroups: []
     parametersHandlerSource: cloud
