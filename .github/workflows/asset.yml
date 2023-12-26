@@ -50,7 +50,7 @@ jobs:
       - name: Setup basic configuration
         uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
         with: 
-          email: jean-charles.planchenault@cosmotech.com
+          email: mohcine.tor@cosmotech.com
           user_principal_id: fac3930c-4d15-4dc7-b2d8-c1cc85dd7136
           workspace_key: PerfAsset
           team_id: 3632b05e-3159-4b81-a660-b347fbaaaf46
@@ -59,8 +59,8 @@ jobs:
           uri_artifact_zip: https://github.com/Cosmo-Tech/azure-function-scenario-download/releases/download/v1.0.1/artifact.zip
           deployment_name: AzureRTEPiloteDeliveryPerf
           location: westeurope
-          repo_to: webapp-asset-demo
-          branch_to: deployment/test-delivery-rte-performance
+          repo_to: azure-webapp-asset-qa
+          branch_to: dev/asset
           organization: Cosmo-Tech
           api_url: https://perf.api.cosmotech.com/v2 
           api : "true"
@@ -70,7 +70,7 @@ jobs:
         uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
         with:
           name: "RTE"
-          email: jean-charles.planchenault@cosmotech.com
+          email: mohcine.tor@cosmotech.com
           role: admin
 
       - name: create container storage by default
@@ -113,10 +113,10 @@ jobs:
         with:
           repo_from: Cosmo-Tech/webapp-asset-demo
           branch_from: deployment/delivery-rte-performance
-          repo_to: Cosmo-Tech/webapp-asset-demo
-          branch_to: deployment/test-delivery-rte-performance
-          username: jpla-csm
-          email: jean-charles.planchenault@cosmotech.com
+          repo_to: Cosmo-Tech/azure-webapp-asset-qa
+          branch_to: dev/asset 
+          username: mohcine
+          email: mohcine.tor@cosmotech.com
       
       - name: increment deployment name field
         id: idnf
@@ -172,7 +172,7 @@ jobs:
         uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
         with:
           name: WP03-Overhead_lines_b
-          email: jean-charles.planchenault@cosmotech.com
+          email: mohcine.tor@cosmotech.com
           role: admin
 
       - name: upload CSV file asset
