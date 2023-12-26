@@ -112,7 +112,7 @@ jobs:
         uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
         with:
           repo_from: Cosmo-Tech/webapp-asset-demo
-          branch_from: deployment/delivery-rte-pilot-demo
+          branch_from: upstream/deployment/delivery-rte-performance
           repo_to: Cosmo-Tech/azure-webapp-asset-qa
           branch_to: dev/asset 
           username: mohcine
