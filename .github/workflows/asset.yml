@@ -147,8 +147,8 @@ jobs:
             if [ "${{ env.PLATFORM_ID }}" == "dev" ]; then
               cp $config_path/dev/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.dataset.storage.yaml
               cp $config_path/dev/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.solution.yaml
-            elif [ "${{ env.PLATFORM_ID }}" == "perf_mona" ]; then
-              cp $config_path/perf/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf_mona.dataset.storage.yaml
+            elif [ "${{ env.PLATFORM_ID }}" == "perf" ]; then
+              cp $config_path/perf/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.dataset.storage.yaml
               cp $config_path/perf/solution_WP01_performance.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.solution.yaml
             elif [ "${{ env.PLATFORM_ID }}" == "staging" ]; then
               cp $config_path/staging/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.dataset.storage.yaml
