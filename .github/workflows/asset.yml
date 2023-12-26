@@ -130,10 +130,10 @@ jobs:
       - name: deploy webapp
         uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
             
-      - name: retrieve azure function key
-        uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
-        with:
-          resource_group: phoenixperf
+      # - name: retrieve azure function key
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
+      #   with:
+      #     resource_group: phoenixperf
 
       - name: create connector storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
