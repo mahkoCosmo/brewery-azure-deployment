@@ -54,8 +54,8 @@ jobs:
           user_principal_id: fac3930c-4d15-4dc7-b2d8-c1cc85dd7136
           workspace_key: PerfAsset
           team_id: 3632b05e-3159-4b81-a660-b347fbaaaf46
-          simulator_image_docker: asset_simulator
-          simulator_version: 14.2.1
+          simulator_image_docker: asset_simulators
+          simulator_version: ASSET_v14.2.0_2023-05-30-10h25-06Z
           uri_artifact_zip: https://github.com/Cosmo-Tech/azure-function-scenario-download/releases/download/v1.0.1/artifact.zip
           deployment_name: AzureRTEPiloteDeliveryPerf
           location: westeurope
@@ -149,7 +149,7 @@ jobs:
               cp $config_path/dev/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.solution.yaml
             elif [ "${{ env.PLATFORM_ID }}" == "perf" ]; then
               cp $config_path/perf/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.dataset.storage.yaml
-              cp $config_path/perf/solution_WP01_performance.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.solution.yaml
+              cp $config_path/perf/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.solution.yaml
             elif [ "${{ env.PLATFORM_ID }}" == "staging" ]; then
               cp $config_path/staging/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.dataset.storage.yaml
               cp $config_path/staging/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.solution.yaml

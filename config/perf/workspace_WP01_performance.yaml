@@ -1,56 +1,38 @@
-dedicatedEventHubAuthenticationStrategy: TENANT_CLIENT_CREDENTIALS
-dedicatedEventHubSasKeyName: null
-description: Workspace for testing the performance RTE reference datasets
-key: PerformanceWorkspace
-name: WP01 Performance
-security:
-    accessControlList:
-    -   id: jerome.blanc@cosmotech.com
-        role: admin
-    -   id: mazou.ouedraogo@cosmotech.com
-        role: admin
-    -   id: john.folly@cosmotech.com
-        role: admin
-    -   id: jean-charles.planchenault@cosmotech.com
-        role: admin
-    -   id: paul.duvivier@cosmotech.com
-        role: admin
-    -   id: olivier.blancke@cosmotech.com
-        role: admin
-    -   id: mohammed.bali@cosmotech.com
-        role: editor
-    -   id: witold.krasny@cosmotech.com
-        role: editor
-    -   id: matthieu.bach@cosmotech.com
-        role: editor
-    -   id: ghislain.bordron@cosmotech.com
-        role: editor
-    default: editor
-sendInputToDataWarehouse: null
-sendScenarioMetadataToEventHub: true
-sendScenarioRunToEventHub: true
+key: ${key}
+name: ${name}
+description: "Workspace for solution"
 solution:
-    defaultRunTemplateDataset: null
-    runTemplateFilter: null
-    solutionId: ${deploy['solution_id']}
-tags: null
-useDedicatedEventHubNamespace: true
-version: null
+  solutionId: ${cosmotech['api']['solution_id']}
+  runTemplateFilter:
+  defaultRunTemplateDataset: null
+useDedicatedEventHubNamespace: ${cosmotech['api']['use_dedicated_event_hub_namespace']}
+sendScenarioMetadataToEventHub: ${cosmotech['api']['send_scenario_metadata_to_event_hub']}
+sendInputToDataWarehouse: true
+dedicatedEventHubSasKeyName: null
+dedicatedEventHubAuthenticationStrategy: null
+sendScenarioRunToEventHub: true
+security:
+  default: none
+  accessControlList:
+  - id: ${security_id}
+    role: ${security_role}
 webApp:
-    iframes: null
-    options:
-        charts:
-            dashboardsView: []
-            dashboardsViewIframeDisplayRatio: 1.8686131386861313
-            logInWithUserCredentials: true
-            scenarioView: []
-            scenarioViewIframeDisplayRatio: 3.511111111111111
-            workspaceId: null
-        instanceView:
-            dataContent: null
-            dataSource: null
-        menu:
-            documentationUrl: ''
-            organizationUrl: https://cosmotech.com
-            supportUrl: https://support.cosmotech.com
-    url: ''
+  url: https://${cosmotech['webapp']['static_domain']}
+  options:
+    charts:
+      workspaceId: ${cosmotech['powerbi']['workspace']['id']}
+      logInWithUserCredentials: false
+      scenarioViewIframeDisplayRatio: 4.514285714285714
+      dashboardsViewIframeDisplayRatio: 1.610062893081761
+      dashboardsView:
+      scenarioView:
+    instanceView:
+      dataSource:
+        type: adt
+        functionUrl: "https://${functionUrl}.azurewebsites.net/api/ScenarioDownload"
+        functionKey: ${azf_key}
+      datacontent:
+    menu:
+      documentationUrl: https://portal.cosmotech.com/resources/platform-resources/platform-help
+      supportUrl: https://support.cosmotech.com
+      organizationUrl: https://cosmotech.com

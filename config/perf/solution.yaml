@@ -1,0 +1,194 @@
+csmSimulator: ${cosmotech['acr']['simulator_repository']}
+description: ${tag} Solution for running the workpackage 03 'Lignes Aériennes' de RTE
+key: ${key}
+name: ${name}
+parameterGroups:
+-   id: SimulationParameters
+    isTable: null
+    labels:
+        fr: Paramètres de simulation
+    options: null
+    parameters:
+    - StartYear
+    - NumberOfYear
+    - NbOfStepsPerYear
+    parentId: null
+-   id: BudgetParameters
+    isTable: null
+    labels:
+        fr: Budgets
+    options: null
+    parameters:
+    - BudgetActivationTable
+    - BudgetQuantityTable
+    parentId: null
+-   id: TechnicalPolicies
+    isTable: null
+    labels:
+        fr: Politiques Techniques
+    options: null
+    parameters:
+    - TechnicalPoliciesTable
+    parentId: null
+-   id: ActionFamilies
+    isTable: null
+    labels:
+        fr: Actions
+    options: null
+    parameters:
+    - ActionFamiliesTable
+    parentId: null
+parameters:
+-   defaultValue: 2023
+    id: StartYear
+    labels:
+        fr: Année de début
+    varType: int
+-   defaultValue: 30
+    id: NumberOfYear
+    labels:
+        fr: Nombre d'années de simulation
+    maxValue: 100
+    minValue: 1
+    varType: int
+-   defaultValue: 52
+    id: NbOfStepsPerYear
+    labels:
+        fr: Nombre de pas par année
+    maxValue: 365
+    minValue: 1
+    varType: int
+-   id: BudgetActivationTable
+    labels:
+        fr: Activation des contraintes budgétaires
+    options:
+        columns:
+        -   field: BudgetName
+            type:
+            - string
+        -   field: BudgetConstrained
+            type:
+            - bool
+        connectorId: ${cosmotech['api']['connector']['storage_id']}
+        dateFormat: dd/MM/yyyy
+        description: null
+        subType: TABLE
+    varType: '%DATASETID%'
+-   id: BudgetQuantityTable
+    labels:
+        fr: Attribution des ressources budgétaires
+    options:
+        columns:
+        -   field: BudgetName
+            type:
+            - string
+        -   field: SimulationRelativeYear
+            minValue: 1
+            type:
+            - int
+        -   field: AvailableQuantity
+            minValue: 0
+            type:
+            - number
+        connectorId: ${cosmotech['api']['connector']['storage_id']}
+        dateFormat: dd/MM/yyyy
+        description: null
+        subType: TABLE
+    varType: '%DATASETID%'
+-   id: TechnicalPoliciesTable
+    labels:
+        fr: Paramètres des politiques techniques
+    options:
+        columns:
+        -   field: PolicyName
+            type:
+            - string
+        -   field: AssetClass
+            type:
+            - string
+        -   field: StartYear
+            minValue: 2023
+            type:
+            - int
+        -   field: EndYear
+            minValue: 2023
+            type:
+            - int
+        -   field: IsInactive
+            type:
+            - bool
+        connectorId: ${cosmotech['api']['connector']['storage_id']}
+        dateFormat: dd/MM/yyyy
+        description: null
+        subType: TABLE
+    varType: '%DATASETID%'
+-   id: ActionFamiliesTable
+    labels:
+        fr: Paramètre des familles d'action
+    options:
+        columns:
+        -   field: ActionName
+            type:
+            - string
+        -   field: RateLevel
+            type:
+            - string
+        -   field: UnitSupplierCost
+            minValue: 0
+            type:
+            - number
+        -   field: UnitDuration
+            minValue: 0
+            type:
+            - number
+        connectorId: ${cosmotech['api']['connector']['storage_id']}
+        dateFormat: dd/MM/yyyy
+        description: null
+        subType: TABLE
+    varType: '%DATASETID%'
+repository: ${cosmotech['acr']['simulator_repository']}
+runTemplates:
+-   applyParameters: true
+    computeSize: highmemory
+    runSizing:
+      requests:
+        cpu: "2"
+        memory: 16Gi
+      limits:
+        cpu: "2"
+        memory: 16Gi
+    csmSimulation: AzureWebApp/AzureWebApp_Simulation
+    datasetValidatorSource: local
+    description: Run template for running the workpackage 03 'Lignes Aériennes' de RTE
+    executionTimeout: null
+    fetchDatasets: true
+    fetchScenarioParameters: true
+    gitBranchName: null
+    gitRepositoryUrl: null
+    id: WP03_RunTemplate
+    name: WP03 Lignes Aériennes
+    noDataIngestionState: false
+    parameterGroups:
+    - SimulationParameters
+    - BudgetParameters
+    - TechnicalPolicies
+    - ActionFamilies
+    parametersHandlerSource: cloud
+    parametersJson: false
+    postRun: true
+    postRunSource: cloud
+    preRun: true
+    preRunSource: cloud
+    run: true
+    runSource: local
+    runTemplateSourceDir: null
+    scenarioDataDownloadTransform: false
+    scenariodataTransformSource: local
+    sendDatasetsToDataWarehouse: true
+    sendInputParametersToDataWarehouse: false
+    stackSteps: false
+    tags:
+    - Assets
+    validateData: false
+url: https://github.com/Cosmo-Tech/aio.git
+version: ${cosmotech['acr']['simulator_version']}
