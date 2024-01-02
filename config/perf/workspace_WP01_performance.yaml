@@ -3,7 +3,7 @@ name: ${name}
 description: "Workspace for solution"
 solution:
   solutionId: ${cosmotech['api']['solution_id']}
-  runTemplateFilter:
+  runTemplateFilter: null
   defaultRunTemplateDataset: null
 useDedicatedEventHubNamespace: ${cosmotech['api']['use_dedicated_event_hub_namespace']}
 sendScenarioMetadataToEventHub: ${cosmotech['api']['send_scenario_metadata_to_event_hub']}
@@ -22,16 +22,13 @@ webApp:
     charts:
       workspaceId: ${cosmotech['powerbi']['workspace']['id']}
       logInWithUserCredentials: false
-      scenarioViewIframeDisplayRatio: 4.514285714285714
-      dashboardsViewIframeDisplayRatio: 1.610062893081761
+      scenarioViewIframeDisplayRatio: 3.511111111111111
+      dashboardsViewIframeDisplayRatio: 1.8686131386861313
       dashboardsView:
       scenarioView:
     instanceView:
-      dataSource:
-        type: adt
-        functionUrl: "https://${functionUrl}.azurewebsites.net/api/ScenarioDownload"
-        functionKey: ${azf_key}
-      datacontent:
+      dataSource: null 
+      dataContent: null
     menu:
       documentationUrl: https://portal.cosmotech.com/resources/platform-resources/platform-help
       supportUrl: https://support.cosmotech.com
