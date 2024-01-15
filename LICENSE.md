@@ -1,7 +1,7 @@
 LICENSE
 =======
 
-Copyright 2021-2023 Cosmo Tech
+Copyright 2021-2024 Cosmo Tech
 
 You are authorized to use this software following the execution of a specific agreement with Cosmo Tech or with an authorized licensee of Cosmo Tech.
 

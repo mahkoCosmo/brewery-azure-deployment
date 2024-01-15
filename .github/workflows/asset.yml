@@ -42,12 +42,13 @@ jobs:
       CONTEXT_ID: ${{ github.event.inputs.context_id || 'performance_mona-dev' }}
       PLATFORM_ID: ${{ github.event.inputs.platform_id || 'perf' }}
     steps:
-      - uses: actions/checkout@v3
+      - name: 🎯 Checkout Code
+        uses: actions/checkout@v3
 
-      - name: install babylon
+      - name: 🛠 Install Babylon
         uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
 
-      - name: Setup basic configuration
+      - name: ⚙️ Setup Basic Configuration
         uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
         with: 
           email: mohcine.tor@cosmotech.com
@@ -66,35 +67,35 @@ jobs:
           api : "true"
           item: "WP03_RunTemplate"
           
-      - name: create a new organization
+      - name: 🏢 Create a New Organization
         uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
         with:
           name: "RTE"
           email: mohcine.tor@cosmotech.com
           role: admin
 
-      - name: create container storage by default
+      - name: 📦 Create Container Storage by Default
         uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
 
-      - name: deploy adx database and permissions
+      - name: 🚀 Deploy ADX Database and Permissions
         uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
 
-      - name: deploy eventhub namespaces and permissions
+      - name: 🚀 Deploy Eventhub Namespaces and Permissions
         uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
         with:
           name: "Asset_Eventhub_Deploy"
 
-      - name: azure login
+      - name: 🔐 Azure Login
         uses: Azure/login@v1
         with:
           creds: '{"clientId":"${{ vars.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ vars.SUBSCRIPTION_ID }}","tenantId":"${{ vars.TENANT_ID }}"}'
             
-      - name: authentication eventhub configuration
+      - name: 🔐 Authentication Eventhub Configuration
         uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
         with:
           resource_group: phoenixperf
 
-      - name : Generate Workspace Name
+      - name : 🔍 Generate Workspace Name
         id : GWN
         run : |
             WNDASH=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 3)
@@ -102,13 +103,13 @@ jobs:
             WNSENA=$(date "+%Y-%m-%d_%H:%M:%S")_$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 3)
             echo "WNSENA=$WNSENA" >> $GITHUB_OUTPUT
 
-      - name : deploy workspace powerbi 
+      - name : 📊 Deploy Workspace PowerBI 
         uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
         with:
           workspace_name_dashboard: rte-pilote-delivery-perf_${{ steps.GWN.outputs.WNDASH }}
           workspace_name_scenario: rte-pilote-delivery-perf_${{ steps.GWN.outputs.WNSENA }}
 
-      - name: retrieve sample webapp
+      - name: 📥 Retrieve Sample WebApp
         uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
         with:
           repo_from: Cosmo-Tech/webapp-asset-demo
@@ -118,7 +119,7 @@ jobs:
           username: mohcine
           email: mohcine.tor@cosmotech.com
       
-      - name: increment deployment name field
+      - name: 🔄 Increment Deployment Name Field
         id: idnf
         run: |
             cd ${{ env.dir }}
@@ -127,59 +128,60 @@ jobs:
             new_deployment_name=${deployment_name}_${random_string}
             babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
 
-      - name: deploy webapp
+      - name: 🚀 Deploy WebApp
         uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
             
-      # - name: retrieve azure function key
+      # - name: 📥 Retrieve Azure Function Key
       #   uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
       #   with:
       #     resource_group: phoenixperf
 
-      - name: create connector storage
+      - name: 📦 Create Connector Storage
+        id: createConnector
         uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
         with:
           type: storage
           version: 1.1.2
           name: "Asset_Connector_AZURE_STORAGE"
 
-      - name : add templates
+      - name : 📄 Copy The Templates to The Babylon Env
         run: |
             if [ "${{ env.PLATFORM_ID }}" == "dev" ]; then
-              cp $config_path/dev/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.dataset.storage.yaml
+              cp $config_path/dev/dataset.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.dataset.${{ steps.createConnector.outputs.connectorType }}.yaml
               cp $config_path/dev/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.dev.solution.yaml
             elif [ "${{ env.PLATFORM_ID }}" == "perf" ]; then
-              cp $config_path/perf/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.dataset.storage.yaml
+              cp $config_path/perf/dataset.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.dataset.${{ steps.createConnector.outputs.connectorType }}.yaml
               cp $config_path/perf/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.perf.solution.yaml
             elif [ "${{ env.PLATFORM_ID }}" == "staging" ]; then
-              cp $config_path/staging/dataset.storage.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.dataset.storage.yaml
+              cp $config_path/staging/dataset.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.dataset.${{ steps.createConnector.outputs.connectorType }}.yaml
               cp $config_path/staging/solution.yaml ${{ env.dir }}/.payload/${{ env.CONTEXT_ID }}.staging.solution.yaml
             else
               echo "Unsupported PLATFORM_ID: ${{ env.PLATFORM_ID }}"
               exit 1 
             fi
 
-      - name: create dataset storage
+      - name: 📦 Create Dataset Storage
         uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
         with:
           type: storage
           name: "Asset_Baby_dataset_STORAGE" 
             
-      - name: create solution Asset
+      - name: 📦 Create Solution Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
         with:
           name: WP03-Overhead_lines_b
 
-      - name: create workspace Asset
+      - name: 🏢 Create Workspace Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
         with:
           name: WP03-Overhead_lines_b
           email: mohcine.tor@cosmotech.com
           role: admin
 
-      - name: upload CSV file asset
+      - name: 📤 Upload CSV File Asset
         uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
       
-      - name: upload handlers
+      - name: 📤 Upload Handlers Zip
         uses: Cosmo-Tech/babylon-actions/.github/actions/upload_handlers@asset
         with: 
           item: WP03_RunTemplate
