@@ -1,4 +1,4 @@
-name: Performance_Mona-Dev
+name: Performance_Mona-Perf
 
 env:
   BABYLON_SERVICE: ${{ vars.BABYLON_SERVICE }}
