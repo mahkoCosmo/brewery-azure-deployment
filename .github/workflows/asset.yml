@@ -1,4 +1,4 @@
-name: Performance_Mona-Perf
+name: Brewery_on_dev
 
 env:
   BABYLON_SERVICE: ${{ vars.BABYLON_SERVICE }}
@@ -13,10 +13,10 @@ on:
       context_id:
         description: 'Select CONTEXT_ID'
         required: true
-        default: 'asset'
+        default: 'brewery'
         type: string
         enum:
-          - 'asset'
+          - 'brewery'
           - 'performance_mona-dev'
       platform_id:
         description: 'Select PLATFORM_ID'
@@ -34,7 +34,7 @@ on:
     branches:
       - master 
 jobs:
-  asset-deploy:
+  brewery-deploy:
     runs-on: ubuntu-latest
     env:
       dir: personal
@@ -46,10 +46,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 🛠 Install Babylon
-        uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@brewery
 
       - name: ⚙️ Setup Basic Configuration
-        uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@brewery
         with: 
           email: mohcine.tor@cosmotech.com
           user_principal_id: 67bf46cc-38ec-4f23-aba7-fedfcde26856
@@ -60,28 +60,28 @@ jobs:
           uri_artifact_zip: https://github.com/Cosmo-Tech/azure-function-scenario-download/releases/download/v1.0.1/artifact.zip
           deployment_name: AzureRTEPiloteDeliveryPerf
           location: westeurope
-          repo_to: azure-webapp-asset-qa
-          branch_to: dev/asset
+          repo_to: azure-webapp-brewery-qa
+          branch_to: dev/brewery
           organization: Cosmo-Tech
           api_url: https://perf.api.cosmotech.com/v2 
           api : "true"
           item: "WP03_RunTemplate"
           
       - name: 🏢 Create a New Organization
-        uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/organization@brewery
         with:
           name: "RTE"
           email: mohcine.tor@cosmotech.com
           role: admin
 
       - name: 📦 Create Container Storage by Default
-        uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/storage@brewery
 
       - name: 🚀 Deploy ADX Database and Permissions
-        uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/adx@brewery
 
       - name: 🚀 Deploy Eventhub Namespaces and Permissions
-        uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@brewery
         with:
           name: "Asset_Eventhub_Deploy"
 
@@ -91,7 +91,7 @@ jobs:
           creds: '{"clientId":"${{ vars.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ vars.SUBSCRIPTION_ID }}","tenantId":"${{ vars.TENANT_ID }}"}'
             
       - name: 🔐 Authentication Eventhub Configuration
-        uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@brewery
         with:
           resource_group: phoenixperf
 
@@ -104,18 +104,18 @@ jobs:
             echo "WNSENA=$WNSENA" >> $GITHUB_OUTPUT
 
       - name : 📊 Deploy Workspace PowerBI 
-        uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
+        uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@brewery
         with:
           workspace_name_dashboard: rte-pilote-delivery-perf_${{ steps.GWN.outputs.WNDASH }}
           workspace_name_scenario: rte-pilote-delivery-perf_${{ steps.GWN.outputs.WNSENA }}
 
       - name: 📥 Retrieve Sample WebApp
-        uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@brewery
         with:
-          repo_from: Cosmo-Tech/webapp-asset-demo
+          repo_from: Cosmo-Tech/webapp-brewery-demo
           branch_from: upstream/deployment/delivery-rte-performance
-          repo_to: Cosmo-Tech/azure-webapp-asset-qa
-          branch_to: dev/asset 
+          repo_to: Cosmo-Tech/azure-webapp-brewery-qa
+          branch_to: dev/brewery 
           username: mohcine
           email: mohcine.tor@cosmotech.com
       
@@ -129,16 +129,16 @@ jobs:
             babylon config set -c ${{ env.CONTEXT_ID }} -p ${{ env.PLATFORM_ID }} webapp deployment_name $new_deployment_name
 
       - name: 🚀 Deploy WebApp
-        uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@brewery
             
       # - name: 📥 Retrieve Azure Function Key
-      #   uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
+      #   uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@brewery
       #   with:
       #     resource_group: phoenixperf
 
       - name: 📦 Create Connector Storage
         id: createConnector
-        uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/connector@brewery
         with:
           type: storage
           version: 1.1.2
@@ -161,27 +161,27 @@ jobs:
             fi
 
       - name: 📦 Create Dataset Storage
-        uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@brewery
         with:
           type: storage
           name: "Asset_Baby_dataset_STORAGE" 
             
-      - name: 📦 Create Solution Asset
-        uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
+      - name: 📦 Create Solution Brewery
+        uses: Cosmo-Tech/babylon-actions/.github/actions/solution@brewery
         with:
           name: WP03-Overhead_lines_b
 
-      - name: 🏢 Create Workspace Asset
-        uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
+      - name: 🏢 Create Workspace Brewery
+        uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@brewery
         with:
           name: WP03-Overhead_lines_b
           email: mohcine.tor@cosmotech.com
           role: admin
 
-      - name: 📤 Upload CSV File Asset
-        uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
+      - name: 📤 Upload CSV File Brewery
+        uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@brewery
       
       - name: 📤 Upload Handlers Zip
-        uses: Cosmo-Tech/babylon-actions/.github/actions/upload_handlers@asset
+        uses: Cosmo-Tech/babylon-actions/.github/actions/upload_handlers@brewery
         with: 
           item: WP03_RunTemplate
