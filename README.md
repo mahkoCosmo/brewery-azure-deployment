@@ -1,16 +1,16 @@
-# Asset-Azure-Deployment
+# Brewery-Azure-Deployment
 
 > References
 
 - [`https://cosmo-tech.github.io/Babylon-End-User-Doc/3.1.0/guides/`](https://cosmo-tech.github.io/Babylon-End-User-Doc/3.1.0/guides/)
 
-- [`https://github.com/Cosmo-Tech/babylon-actions`](https://github.com/Cosmo-Tech/babylon-actions/blob/asset/README.md)
+- [`https://github.com/Cosmo-Tech/babylon-actions`](https://github.com/Cosmo-Tech/babylon-actions/blob/brewery/README.md)
 
 ## Introduction
 
-This repository is the base repository that contains the template workflows and necessary files for deploying the asset solution on Azure. These include:
+This repository is the base repository that contains the template workflows and necessary files for deploying the brewery solution on Azure. These include:
 
-- File 1: asset.yaml
+- File 1: brewery.yaml
 - File 2: solution.yaml
 - File 3: dataset.yaml
 ### Project Tree
@@ -28,15 +28,15 @@ This is how the project is structured :
 │   └── staging
 ├── .github
 │   └── workflows
-│       └── asset.yml
+│       └── brewery.yml
 ├── LICENSE.md
 └── README.md
 ```
 ## About Files 
 
-- `asset.yml file`: The required file for deploying asset. It contains all the necessary actions for deploying the solution. From this file, calls are made to actions that are developed in the [`https://github.com/Cosmo-Tech/babylon-action@asset`](https://github.com/Cosmo-Tech/babylon-actions/tree/asset) repository. The actions depend on the solution (supply, asset, brewery...).
+- `brewery.yml file`: The required file for deploying brewery. It contains all the necessary actions for deploying the solution. From this file, calls are made to actions that are developed in the [`https://github.com/Cosmo-Tech/babylon-action@brewery`](https://github.com/Cosmo-Tech/babylon-actions/tree/brewery) repository. The actions depend on the solution (supply, brewery, brewery...).
 
-- `solution.yaml`: This file contains the structure of our solution. It varies for each solution, and this file is valid only for asset.
+- `solution.yaml`: This file contains the structure of our solution. It varies for each solution, and this file is valid only for brewery.
 
 - `dataset.yaml` : This file is a template that is required for creating a storage dataset.
 <br>
@@ -77,10 +77,10 @@ This workflow is triggered both manually using `workflow_dispatch` and automatic
       context_id:
         description: 'Select CONTEXT_ID'
         required: true
-        default: 'asset'
+        default: 'brewery'
         type: string
         enum:
-          - 'asset'
+          - 'brewery'
           - 'performance_mona-dev'
       platform_id:
         description: 'Select PLATFORM_ID'
@@ -106,7 +106,7 @@ This workflow is triggered both manually using `workflow_dispatch` and automatic
 
 ```bash
 - name: 🛠 Install Babylon
-  uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/babylon@brewery
 ```
 - 2 Setup Basic Configuration:
 
@@ -114,7 +114,7 @@ This workflow is triggered both manually using `workflow_dispatch` and automatic
 
 ```bash
 - name: ⚙️ Setup Basic Configuration
-  uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/set-variables@brewery
      with: 
         email: mohcine.tor@cosmotech.com
         user_principal_id: 67bf46cc-38ec-4f23-aba7-fedfcde26856
@@ -125,8 +125,8 @@ This workflow is triggered both manually using `workflow_dispatch` and automatic
         uri_artifact_zip: https://github.com/Cosmo-Tech/azure-function-scenario-download/releases/download/v1.0.1/artifact.zip
         deployment_name: AzureRTEPiloteDeliveryPerf
         location: westeurope
-        repo_to: azure-webapp-asset-qa
-        branch_to: dev/asset
+        repo_to: azure-webapp-brewery-qa
+        branch_to: dev/brewery
         organization: Cosmo-Tech
         api_url: https://perf.api.cosmotech.com/v2 
         api : "true"
@@ -134,7 +134,7 @@ This workflow is triggered both manually using `workflow_dispatch` and automatic
 ```
 - `user_principal_id` : This is the User Object ID in Azure. In this case, I used my Object ID in your case, use yours.
 - `workspace_key` : To be defined by the user
-- `team_id` : This is the Azure Group ID of the team. In my case, I use the one from the Asset team.
+- `team_id` : This is the Azure Group ID of the team. In my case, I use the one from the Brewery team.
 - `simulator_image_docker` : This is the repository of the simulator. In this case, it is <span style="color: red;">simulator_simulator</span>.
 - `simulator_version` : simulator version in this case is <span style="color: red;">ASSET_v14.2.1_2023-10-26-15h23-27Z</span>
 
@@ -152,7 +152,7 @@ for more information about this url chechk this like : [`https://cosmo-tech.atla
 
 ```bash
 - name: 🏢 Create a New Organization
-  uses: Cosmo-Tech/babylon-actions/.github/actions/organization@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/organization@brewery
     with:
         name: "RTE"
         email: your.email@cosmotech.com
@@ -164,7 +164,7 @@ for more information about this url chechk this like : [`https://cosmo-tech.atla
 
 ```bash
 - name: 📦 Create Container Storage by Default
-  uses: Cosmo-Tech/babylon-actions/.github/actions/storage@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/storage@brewery
 ```
 - 5 Deploy ADX Database and Permissions :
 
@@ -172,7 +172,7 @@ for more information about this url chechk this like : [`https://cosmo-tech.atla
 
 ```bash
 - name: 🚀 Deploy ADX Database and Permissions
-  uses: Cosmo-Tech/babylon-actions/.github/actions/adx@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/adx@brewery
 ```
 - 6 Deploy Eventhub Namespaces and Permissions :
 
@@ -181,7 +181,7 @@ for more information about this url chechk this like : [`https://cosmo-tech.atla
 The `name` field is chosen by the user.
 ```bash
 - name: 🚀 Deploy Eventhub Namespaces and Permissions
-  uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/eventhub@brewery
     with:
         name: "Asset_Eventhub_Deploy"
 ```
@@ -209,7 +209,7 @@ This is the call to the action named `Azure/login@v1` for logging into Azure. It
 The `resource_group` field depends on the chosen platform, in this case, it is `perf`
 ```bash
 - name: 🔐 Authentication Eventhub Configuration
-  uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/eventkey@brewery
      with:
         resource_group: phoenixperf
 ```
@@ -237,7 +237,7 @@ This action is used to generate a randomized name for the Power BI dashboard and
 This call action takes as parameters the values generated in the previous action.
 ```bash
 - name : 📊 Deploy Workspace PowerBI 
-  uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@asset
+  uses : Cosmo-Tech/babylon-actions/.github/actions/powerbi@brewery
     with:
         workspace_name_dashboard: rte-pilote-delivery-perf_${{ steps.GWN.outputs.WNDASH }}
         
@@ -250,12 +250,12 @@ This call action takes as parameters the values generated in the previous action
 
 ```bash
 - name: 📥 Retrieve Sample WebApp
-  uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/retrieve@brewery
     with:
-        repo_from: Cosmo-Tech/webapp-asset-demo
+        repo_from: Cosmo-Tech/webapp-brewery-demo
         branch_from: upstream/deployment/delivery-rte-performance
-        repo_to: Cosmo-Tech/azure-webapp-asset-qa
-        branch_to: dev/asset 
+        repo_to: Cosmo-Tech/azure-webapp-brewery-qa
+        branch_to: dev/brewery 
         username: your name
         email: your.email@cosmotech.com
 
@@ -290,16 +290,16 @@ This action retrieves the <span style="color: red;">deployment_name</span> alrea
 > Call Action
 ```bash
 - name: 🚀 Deploy WebApp
-  uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/webapp@brewery
 ```
 - 14 Retrieve Azure Function Key :
 
 > Call Action
 
-This call action is used to retrieve the Azure Function key and save it in the vault. It is only used when deploying the web app with Azure Functions in this case, for Asset, it is not used.
+This call action is used to retrieve the Azure Function key and save it in the vault. It is only used when deploying the web app with Azure Functions in this case, for Brewery, it is not used.
 ```bash
 - name: 📥 Retrieve Azure Function Key
-  uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/azurefunctionkey@brewery
      with:
         resource_group: phoenixperf
 ```
@@ -311,7 +311,7 @@ This call action takes parameters such as `type` (in this case, storage), `versi
 ```bash
 - name: 📦 Create Connector Storage
   id: createConnector
-  uses: Cosmo-Tech/babylon-actions/.github/actions/connector@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/connector@brewery
     with:
         type: storage
         version: 1.1.2
@@ -351,42 +351,42 @@ This action is used to copy the templates `dataset.yaml` and `solution.yaml` pla
 This call action takes parameters such as `type` (in this case, storage), and the `name` chosen by the user.
 ```bash
 - name: 📦 Create Dataset Storage
-  uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/dataset@brewery
     with:
         type: storage
         name: "Asset_Baby_dataset_STORAGE" 
 ```
-- 18 Create Solution Asset :
+- 18 Create Solution Brewery :
 
 > Call Action
 
 This call action takes parameters such as `name` chosen by the user.
 ```bash
-- name: 📦 Create Solution Asset
-  uses: Cosmo-Tech/babylon-actions/.github/actions/solution@asset
+- name: 📦 Create Solution Brewery
+  uses: Cosmo-Tech/babylon-actions/.github/actions/solution@brewery
     with:
         name: WP03-Overhead_lines_b
 ```
-- 19 Create Solution Asset :
+- 19 Create Solution Brewery :
 
 > Call Action
 
 This call action takes parameters such as `name` chosen by the user.
 ```bash
-- name: 🏢 Create Workspace Asset
-  uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@asset
+- name: 🏢 Create Workspace Brewery
+  uses: Cosmo-Tech/babylon-actions/.github/actions/workspace@brewery
     with:
         name: WP03-Overhead_lines_b
         email: your.email@cosmotech.com
         role: admin
 ```
-- 20 Upload CSV File Asset :
+- 20 Upload CSV File Brewery :
 
 > Call Action
 
 ```bash
-- name: 📤 Upload CSV File Asset
-  uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@asset
+- name: 📤 Upload CSV File Brewery
+  uses: Cosmo-Tech/babylon-actions/.github/actions/upload_dataset@brewery
 ```
 - 21 Upload Handlers Zip :
 
@@ -394,7 +394,7 @@ This call action takes parameters such as `name` chosen by the user.
 
 ```bash
 - name: 📤 Upload Handlers Zip
-  uses: Cosmo-Tech/babylon-actions/.github/actions/upload_handlers@asset
+  uses: Cosmo-Tech/babylon-actions/.github/actions/upload_handlers@brewery
     with: 
         item: WP03_RunTemplate
 ```
